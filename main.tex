@@ -1,287 +1,175 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{braket}
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{graphicx}
 
-\title{Adiabatic Processes and Berry Phase}
-\author{Amamiya Masumi}
-\date{February 2025}
+\title{Derivation of Faraday and Kerr Rotation Angles}
+\author{Yucheng Dai}
 
 \begin{document}
 
 \maketitle
 
-\section{Adiabatic Theorem}
-The gradual change of the external conditions defines an adiabatic process. Let's begin our adventure towards one of the most fascinating and enchanting concept in the field of condensed matter physics, the Berry Phase first by introducing ourselves to some crucial theorems.\\
-\\
-\textbf{(First Adiabatic Theorem)} If a particle was initially in the nth eigenstate of $\hat{H}^i$, which represents the initial Hamiltonian of the system (suppose the spectrum is discrete and non-degenerate), it'll be carried (under the Schr\"odinger equation) into the nth eigenstate of $\hat{H}^f$, which represents the final Hamiltonian of the system, if the Hamiltonian changes gradually, validating the adiabatic approximation.
-\begin{proof} If $\hat{H}$ changes with time, both eigenstates and eigenvalues are time-dependent:\begin{equation}
-    \hat{H}(t)\ket{\psi_n(t)}=E_n(t)\ket{\psi_n(t)}
+\section{Boundary Conditions}
+We have the conservation of charge on the interfaces\begin{equation}
+    \frac{\partial\rho}{\partial{t}}=-\nabla\cdot\mathbf{j}
+\end{equation}and the Ohm's law\begin{equation}\renewcommand{\arraystretch}{1.3}
+    \mathbf{j}=\sigma\mathbf{E}=\begin{pmatrix}
+    0 & \sigma_{xy}\\
+    -\sigma_{xy} & 0\\
+\end{pmatrix}\begin{pmatrix}
+E_x \\
+E_y \\
+\end{pmatrix}=\begin{pmatrix}
+\sigma_{xy}E_y \\
+-\sigma_{xy}E_x \\
+\end{pmatrix}
+\end{equation}thus\begin{equation}
+    \frac{\partial\rho}{\partial{t}}=-\sigma_{xy}(\frac{\partial{E_y}}{\partial{x}}-\frac{\partial{E_x}}{\partial{y}})=\sigma_{xy}\frac{\partial{B_z}}{\partial{t}}\Rightarrow{\rho=\sigma_{xy}B_z}
 \end{equation}
-But they still constitute (at any particular instant) an orthonormal yet complete set:\begin{equation}
-    \braket{\psi_n(t)|\psi_m(t)}=\delta_{mn}
-\end{equation}
-So the general solution to the time-dependent Schr\"odinger equation can be expanded in a linear combination of them:\begin{equation}
-    \Psi(t)=\sum_n{c_n(t)\psi_n(t)e^{i\theta_n(t)}} 
-\end{equation}
-where\begin{equation}
-    \theta_n(t)=-\frac{1}{\hbar}\int_{0}^{t}E_n(t')dt'
-\end{equation}
-is the dynamical phase. Substituting equation (3) into (1) and cancelling out the identical terms, we obtained:\begin{equation}
-    \sum_n{\dot{c}_n(t)\psi_n(t)e^{i\theta_n(t)}}=-\sum_n{c_n(t)\dot{\psi}_n(t)e^{i\theta_n(t)}}
-\end{equation}
-Taking the inner product with $\psi_m(t)$, and utilizing the orthonormality of the instantaneous eigenstates, we have:\begin{equation}
-    \sum_n\dot{c}_n(t)\delta_{mn}e^{i\theta_n(t)}=-\sum_n{c_n(t)\braket{\psi_m(t)|\dot{\psi}_n(t)}e^{i\theta_n(t)}}
-\end{equation}
-namely,\begin{equation}
-    \dot{c}_m(t)=-\sum_n{c_n(t)\braket{\psi_m(t)|\dot{\psi}_n(t)}e^{i(\theta_n(t)-\theta_m(t))}}
-\end{equation}
-Differentiating equation (1) with respect to time and taking inner product with $\psi_m(t)$ yields:\begin{equation}
-    \bra{\psi_m}\dot{H}\ket{\psi_n}+\bra{\psi_m}H\ket{\dot{\psi}_n}=\dot{E_n}\delta_{mn}+E_n\braket{\psi_m|\dot{\psi}_n}
-\end{equation}
-For $n\neq{m}$, we have:\begin{equation}
-    \bra{\psi_m}\dot{H}\ket{\psi_n}=(E_n-E_m)\braket{\psi_m|\dot{\psi}_n}
-\end{equation}
-Putting this into equation (7), we conclude that\begin{equation}
-    \dot{c}_m(t)=-c_m(t)\braket{\psi_m|\dot{\psi}_m}-\sum_{n\neq{m}}c_n(t)\frac{\bra{\psi_m}\dot{H}\ket{\psi_n}}{E_n-E_m}e^{i(\theta_n(t)-\theta_m(t))}
-\end{equation}
-Now is exactly when adiabatic approximation works: We assume that $\dot{H}$ is extremely small that we simply drop the second term entirely, leaving\begin{equation}
-    \dot{c}_m(t)=-c_m\braket{\psi_m|\dot{\psi}_m}
-\end{equation}
-Given the initial conditions, we obtained the solution:\begin{equation}
-    c_m(t)=c_m(0)e^{i\gamma_m(t)}
-\end{equation}
-where\begin{equation}
-    \gamma_m(t)=i\int_{0}^{t}\braket{\psi_m(t')|\dot{\psi}_m(t')}dt'
-\end{equation}
-Since the inner product in the integral is trivially imaginary, the phase factor $\gamma_m(t)$ is incontrovertibly real. In particular, if the particle starts out in the nth eigenstate, then according to the equation (3) and (12), it remains in the nth eigenstate, picking up only a couple of phase factors. The first adiabatic theorem is therefore proved.
-\end{proof}
-But what if there's degeneracy in energy levels? Frankly speaking, complete non-degenerate system is not that common as we anticipated. In fact, if the energy levels are degenerate, the occasion becomes much more complicated immediately, which involves non-Abelian phases. The second adiabatic theorem (named by myself arbitrarily) in the follow will presents a comprehensive explanation of this scenario.\\
-\\
-\textbf{(Second Adiabatic Theorem)} If a particle was initially in one of the nth eigenstates of $\hat{H}^i$ (suppose the spectrum is discrete but processes degeneracy), then under time evolution, it can be transferred to other eigenstates in the same energy level with the initial state. That is to say, the state can rotate within the degenerate manifold.
-\begin{proof} Obviously, for $i$-th energy level and corresponding degeneracy $j$, all the eigenstates and eigenvalues are time-dependent:\begin{equation}
-    \hat{H}(t)\ket{\psi_{ij}(t)}=E_i(t)\ket{\psi_{ij}(t)}
-\end{equation}
-Express the general solution to the time-dependent Schr\"odinger equation in a linear combination of the orthonormal and complete set consisting of all the eigenfunctions:\begin{equation}
-    \Psi(t)=\sum_{i,j}c_{ij}(t)\psi_{ij}(t)e^{i\theta_i(t)}
-\end{equation}
-Please pay attention that under this circumstance, all degenerate eigenstates share the same dynamic phase. Substituting equation (15) into (14) and cancelling out the identical terms, we obtained:\begin{equation}
-    \sum_{i,j}\dot{c}_{ij}(t)\psi_{ij}(t)e^{i\theta_i(t)}=-\sum_{i,j}c_{ij}(t)\dot{\psi}_{ij}(t)e^{i\theta_i(t)}
-\end{equation}
-Taking the inner product with $\psi_{km}(t)$, and invoking the orthonormality of the instantaneous eigenstates, we have (please be aware that the notation $j$ is dependent of notation $i$):\begin{equation}
-    \sum_{i,j}\dot{c}_{ij}(t)\delta_{ik}\delta_{jm}e^{i\theta_i(t)}=-\sum_{i,j}c_{ij}(t)\braket{\psi_{km}(t)|\dot{\psi}_{ij}(t)}e^{i(\theta_i(t)-\theta_k(t))}
-\end{equation}
-Differentiating equation (14) with respect to time and taking the inner product with $\psi_{km}(t)$ yields:\begin{equation}
-    \bra{\psi_{km}}\dot{H}\ket{\psi_{ij}}+\bra{\psi_{km}}H\ket{\dot{\psi}_{ij}}=\dot{E_i}\delta_{ik}\delta_{jm}+E_i\braket{\psi_{km}|\dot{\psi}_{ij}}
-\end{equation}
-For $i\neq{k}$, we have:\begin{equation}
-    \bra{\psi_{km}}\dot{H}\ket{\psi_{ij}}=(E_i-E_k)\braket{\psi_{km}|\dot{\psi}_{ij}}
-\end{equation}
-Putting this into equation (17), we conclude that\begin{equation}
-    \dot{c}_{km}(t)=-\sum_{n}c_{kn}(t)\braket{\psi_{km}|\dot{\psi}_{kn}}-\sum_{i\neq{k}}c_{ij}(t)\frac{\bra{\psi_{km}}\dot{H}\ket{\psi_{ij}}}{E_i-E_k}e^{i(\theta_i(t)-\theta_k(t))}
-\end{equation}
-Recalling what we've done in proving the first adiabatic theorem, the second term naturally vanishes when we apply the adiabatic approximation, leaving\begin{equation}
-    \dot{c}_{km}(t)=-\sum_{n}c_{kn}(t)\braket{\psi_{km}|\dot{\psi}_{kn}}
-\end{equation}
-The result is a group of differential equations. If we rewrite these equations in matrix form, with all the $c_{kn}(t)$ in the form of a vector $\mathbf{c_k}(t)$ and time-dependent matrix elements being\begin{equation}
-    \mathcal{A}_{mn}(t)=i\braket{\psi_{km}(t)|\dot{\psi}_{kn}(t)}
-\end{equation}
-Then we obtained a rather decent form:\begin{equation}
-    \mathbf{\dot{c}_k}(t)=i\mathcal{A}(t)\mathbf{c_k}(t)
-\end{equation}
-Needless to say, this simplified form reminds us of the time-dependent quantum dynamical equation where the Hamiltonian is also time-dependent. Usually we would seek for solutions using the time-dependent perturbation theory. But for precise results, we need a special tool called the time-ordered product since the instantaneous Hamiltonian is typically non-Abelian, much similar to what we've encountered previously. The general solution to time-dependent Schr\"odinger equation using time-ordered product is:\begin{equation}
-    \ket{\psi(t)}=\mathcal{T}\mathrm{exp}(-\frac{i}{\hbar}\int_{t_0}^{t}\hat{H}(t')dt')\ket{\psi(t_0)}
-\end{equation}
-We can simply imitate and obtain the general solution to our scenario:\begin{equation}
-    \mathbf{c_k}(t)=\mathcal{T}\mathrm{exp}(i\int_{0}^{t}\mathcal{A}(t')dt')\mathbf{c_k}(0)
-\end{equation}
-We can also discover by chance that the matrix $\mathcal{A}$ is exactly Hermitian, which also shares similarity with typical Hamiltonian. Now if the particle starts out in one degenerate energy state, then according to equation (15) and (25), it may be transferred to other eigenstates in the same energy level with the initial state, but undoubtedly remains in the degenerate manifold.
-\end{proof}
-Up to now we've demonstrated and scrupulously proved these two significant theorem which serve as the backbone of upcoming concepts such as Berry phase and Berry curvature. In the next chapter we'll discuss the nonholonomic process and the concept of Berry phase together with its geometric aspect.
-
-\section{Berry Phase and Berry Curvature}
-A system such as the Foucault Pendulum, which does not return to its original state when transported around a closed loop, is said to be $\mathbf{nonholonomic}$. The word "transport" here does not require any physical motion, what we bear in mind is that the parameters of the system are changed in a particular means that eventually returns them to their initial values. Let's move on to the quantum mechanics of nonholonomic adiabatic processes, and confine our discussion within the non-degenerate Hamiltonian to avoid complexity. According to the first adiabatic theorem, we have:\begin{equation}
-    \Psi_n(t)=\psi_n(t)e^{i[\theta_n(t)+\gamma_n(t)]}
-\end{equation}
-where $\theta_n(t)$ is the dynamical phase and $\gamma_n(t)$ is the so-called geometric phase. We find that $\psi_n(t)$ depends on $t$ since there is some parameter $\mathbf{R}(t)$ (vector form) in the Hamiltonian that is changing with time. Thus\begin{equation}
-    \frac{d}{dt'}\psi_n(t')=\sum_i\frac{\partial{\psi_n}}{\partial{R_i}}\frac{dR_i}{dt'}=(\nabla_R\psi_n)\cdot\frac{d\mathbf{R}}{dt'}
-\end{equation}
-where $\nabla_R$ is the gradient with respect to these parameters. Putting this into the expression of geometric phase, we obtained:\begin{equation}
-    \gamma_n(t)=i\int_{\mathbf{R}_i}^{\mathbf{R}_f}\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{R}}
-\end{equation}
-If the Hamiltonian returns to its original form after a time $T$, the net geometric phase change is:\begin{equation}
-    \gamma_n(T)=i\oint\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{R}}
-\end{equation}
-This is a line integral along a closed loop in parameter-space, and generally speaking, it is not zero. Equation (29) was first derived by Micheal Berry in 1984 and $\gamma_n(T)$ is therefore named after him, called $\mathbf{Berry~Phase}$. Notice that Berry phase depends only on the path taken, not on how fast that path is traversed (yet slow enough to validate the adiabatic hypothesis). By contrast, the accumulated dynamical phase $\theta_n(T)$ depends critically on the elapsed time.\\
-\\
-Like electromagnetic field, we define a vector function called $\mathbf{Berry~Connection}$ or $\mathbf{Berry~Vector~Potential}$:\begin{equation}
-    \mathcal{A}_n(\mathbf{R})=i\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}
-\end{equation}
-It's trivial that Berry vector potential is pure real. Using this expression, we can rewrite Berry phase as:\begin{equation}
-    \gamma_n(C)=-\Im\int_C\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{R}}=\int_C\mathcal{A}_n(\mathbf{R})\cdot{d\mathbf{R}}
-\end{equation}
-Before discussing the gauge invariance, let's take a glimpse at the observation of Berry phase. We're accustomed to thinking that the phase factor cancels out when calculating physical quantities involving $|\Psi|^2$. But same thing doesn't apply for the geometric phase. For instance, if we take a beam of particles (all in the state $\psi_0$), and split it into two so that one beam passes through an adiabatically changing potential while the other doesn't. When the two beams are recombined, the total wave function has the form:\begin{equation}
-    \psi=\frac12\psi_0+\frac12\psi_0e^{i\theta}
-\end{equation}
-where $\theta$ is the extra phase (in part dynamical, and in part geometric). In this case, we have:\begin{equation}
-    |\psi|^2=\frac12|\psi_0|^2(1+\cos{\theta})=|\psi_0|^2\cos^2(\frac{\theta}{2})
-\end{equation}
-We found out that this actually characterizes quantum interference. So by looking for points of constructive and destructive interference, one can easily measure $\theta$, which makes the observation of Berry phase possible.\\
-\\
-To talk about the gauge properties of Berry phase, we need to define a gauge transformation first:\begin{equation}
-    \ket{\psi_n(\mathbf{R})}\rightarrow\ket{\psi'_n(\mathbf{R})}={e^{i\zeta(\mathbf{R})}\ket{\psi_n(\mathbf{R})}}
-\end{equation}
-With a little calculation, we obtained the transformed Berry connection:\begin{equation}
-    \mathcal{A}_n(\mathbf{R})\rightarrow{\vec{\mathcal{A}}'_n(\mathbf{R})}=i\braket{\psi'_n(\mathbf{R})|\nabla_R\psi'_n(\mathbf{R})}=\mathcal{A}_n(\mathbf{R})-\nabla_R\zeta(\mathbf{R})
-\end{equation}
-and the transformed Berry phase:\begin{equation}
-    \gamma_n\rightarrow{\gamma'_n}=\gamma_n+\zeta(\mathbf{R}(0))-\zeta(\mathbf{R}(T))
-\end{equation}
-We're therefore convinced that Berry connection and Berry phase are both gauge-dependent. Before Berry, many people had concluded that, by a thoughtful choice of the gauge factor $\zeta(\mathbf{R})$, Berry phase can be cancelled and hence, is not of much significance. To falsify this statement, we can consider a closed path C in parameter-space for which, after a long time $T$, we return to the original parameters. For such a path, the fact that we chose our eigenstates to be single-valued means that when we return to the original parameter configuration, the basis state must be the same and gauge transformations must maintain this property, namely\begin{equation}
-    \zeta(\mathbf{R}(t))-\zeta(\mathbf{R}(0))=2k\pi
-\end{equation}
-where $k$ is an integer. We can find that unless being an integer itself, the Berry phase cannot be cancelled simply by choosing the gauge factor wisely.\\
-\\
-In the remainder of this material, we will confine our discussion within closed paths and consider the parameter-space to be three-dimensional, which is good enough in condensed matter physics. According to equation (36), for a closed path, the Berry phase is obviously a $\mathbf{gauge-invariant}$ quantity. Application of Stokes theorem gives:\begin{equation}
-    \gamma_n=-\Im{\int(\nabla\times\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})})}\cdot{d\mathbf{S}}=-\Im\int\bra{\nabla_R\psi_n(\mathbf{R})}\times\ket{\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{S}}
-\end{equation}
-This equation is called the $\mathbf{Berry's~formula}$. It is quite reminiscent of the expression for magnetic flux in terms of vector potential $\vec{\mathbf{A}}$, thus, Berry phase can be thought of as the “flux" through the close loop trajectory in parameter-space. Moreover, by analogy with differential geometry, we can also define a specific kind of curvature here. Start from Berry phase, we have:\begin{equation}
-    \gamma_n=\oint_C\mathcal{A}_{\mu}dx^{\mu}=\int_S\partial_{\nu}\mathcal{A}_{\mu}dx^{\mu}\wedge{dx^{\nu}}=\int_S\frac12(\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu})dx^{\mu}\wedge{dx^{\nu}}
-\end{equation} 
-We define tensor\begin{equation}
-    \Omega_{\mu\nu}=\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu}
-\end{equation}
-to be $\mathbf{Berry~curvature}$. In this way, we can rewrite the Berry phase as follows:\begin{equation}
-    \gamma_n=\int_S{\frac12\Omega_{\mu\nu}dx^{\mu}\wedge{dx^{\nu}}}
-\end{equation}
-Suppose the corresponding vector $\vec{\mathbf{\Omega}}(\mathbf{R})$ of Berry curvature is the curl of Berry connection, that is to say\begin{equation}
-    \gamma_n=\int_S\vec{\mathbf{\Omega}}(\mathbf{R})\cdot{d\mathbf{S}}=\int_S\Omega_{\rho}dS^{\rho}
-\end{equation}
-Then we could easily derive the relation between Berry curvature and the corresponding vector using the Levi-Civita symbol:\begin{equation}
-    \Omega^\rho=\frac12\Omega_{\mu\nu}\epsilon^{\mu\nu\rho}
+Plugging this into the Maxwell equations, we have\begin{equation}
+    \nabla\cdot\mathbf{E}=\frac{\sigma_{xy}}{\varepsilon_0}B_z
 \end{equation}\begin{equation}
-    \Omega_{\mu\nu}=2\Omega^\rho\epsilon_{\mu\nu\rho}
-\end{equation}
-Before continuing the discussion of non-Abelian Berry curvature, I want to mention a gauge-independent computational method of Berry phase and simultaneously verify the $\mathrm{U(1)}$ gauge invariance of Berry curvature. Since the spectrum of Hamiltonian is non-degenerate, we insert the identity operator into $\Omega^k$:\begin{equation}
-    \Omega^k=-\Im[(\braket{\nabla_i\psi_n(\mathbf{R})|\psi_n(\mathbf{R})}\braket{\psi_n(\mathbf{R})|\nabla_j\psi_n(\mathbf{R})}+\sum_{m\neq{n}}\braket{\nabla_i\psi_n(\mathbf{R})|\psi_m(\mathbf{R})}\braket{\psi_m(\mathbf{R})|\nabla_j\psi_n(\mathbf{R})})\epsilon^{ijk}]
-\end{equation}
-The first term can be dropped since it's pure real and makes no contribution to $\Omega^k$. Hence, we have\begin{equation}
-    \gamma_n=-\Im\sum_{m\neq{n}}\int_S\braket{\nabla_i\psi_n(\mathbf{R})|\psi_m(\mathbf{R})}\braket{\psi_m(\mathbf{R})|\nabla_j\psi_n(\mathbf{R})}\epsilon^{ijk}dS_k
-\end{equation}
-Another equivalent expression of equation (9) can be written as:\begin{equation}
-    \bra{\psi_m(\mathbf{R})}(\nabla_RH)\ket{\psi_n(\mathbf{R})}=(E_n-E_m)\braket{\psi_m(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}
-\end{equation}
-Substitute equation (47) into equation (46), we have\begin{equation}
-    \gamma_n=-\Im\int_S\sum_{m\neq{n}}\frac{\bra{\psi_n(\mathbf{R})}(\nabla_RH)\ket{\psi_m(\mathbf{R})}\times\bra{\psi_m(\mathbf{R})}(\nabla_RH)\ket{\psi_n(\mathbf{R})}}{(E_m(\mathbf{R})-E_n(\mathbf{R}))^2}\cdot{d\mathbf{S}}
-\end{equation} 
-Equation (48) is manifestly gauge independent. It has the advantage over other gauge-independent formulas such as the Berry curvature since it can be evaluated under any gauge choice as the derivatives have been moved to the Hamiltonian. If we sum over the Berry phase of all energy levels, we get 0, showing that the sum of all filled bands can have only zero Berry phase. Up to now we've verified the $\mathrm{U(1)}$ gauge invariance of Berry curvature, now let's move on to the non-Abelian Berry curvature.\\
-\\
-The core problem which must be settled is how can we maintain the gauge invariance even if the Berry connection becomes non-Abelian. It is known to us all that the electromagnetic field defined by electromagnetic potential is a typical gauge field, and so is the field defined by Berry connection. For electromagnetic field, it has the $\mathrm{U(1)}$ gauge invariance in Lagrangian density to maintain physical invariance. In particular, if we apply a gauge transformation on quantum states\begin{equation}
-    \ket{\psi_n}\rightarrow\ket{\psi'_n}={e^{i\zeta(x^\mu)}\ket{\psi_n}}
-\end{equation}
-The electromagnetic potential must also vary to ensure an unchanged Lagrangian density\begin{equation}
-    \mathcal{L}=-\frac14F_{\mu\nu}F^{\mu\nu}+\bar{\psi}(i\gamma^\mu{D_\mu}-m)\psi
-\end{equation}
-where $D_\mu$ symbolizes the co-variant derivative:\begin{equation}
-    D_\mu=\partial_\mu+iA_\mu
-\end{equation}
-with little calculation, we can find out how the electromagnetic potential varies:\begin{equation}
-    A_\mu\rightarrow{A'_\mu}=A_\mu-\partial_\mu\zeta(x^\mu)
-\end{equation}
-which is almost identical with Berry connection. I'm fully convinced that it's a hint that the analogy we made is quite reasonable. Now that we've already proved the Berry connection and electromagnetic potential both to have the $\mathrm{U(1)}$ gauge invariance. Thus, the Berry curvature in non-Abelian scenario must also be gauge invariant, but only in higher level, namely $\mathrm{SU(N)}$, where N is the order of matrix $\mathcal{A}_{mn}(t)$ and also the degeneracy of energy level $m$. It's complicated to construct this gauge-invariant quantity so I'll just affirm that the operator $-i[D_\mu,D_\nu]$ is gauge-invariant. In fact, we have\begin{equation}
-    D_\mu{D_\nu}=(\partial_\mu+i\mathcal{A}_\mu)(\partial_\nu+i\mathcal{A}_\nu)=\partial_\mu\partial_\nu+i\mathcal{A}_\mu\partial_\nu+i\mathcal{A}_\nu\partial_\mu+i(\partial_\mu{\mathcal{A}_\nu})-\mathcal{A}_\mu{\mathcal{A}_\nu}
+    \nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial{t}}
 \end{equation}\begin{equation}
-    D_\nu{D_\mu}=(\partial_\nu+i\mathcal{A}_\nu)(\partial_\mu+i\mathcal{A}_\mu)=\partial_\nu\partial_\mu+i\mathcal{A}_\nu\partial_\mu+i\mathcal{A}_\mu\partial_\nu+i(\partial_\nu{\mathcal{A}_\mu})-\mathcal{A}_\nu{\mathcal{A}_\mu}
-\end{equation}
-Thus, the operator $-i[D_\mu,D_\nu]$ has the neat form:\begin{equation}
-    -i[D_\mu,D_\nu]=\partial_\mu{\mathcal{A}_\nu}-\partial_\nu{\mathcal{A}_\mu}+i[\mathcal{A}_\mu,\mathcal{A}_\nu]
-\end{equation}
-We notice that if the Berry connection is Abelian, the last term vanishes and everything just simply breaks down to the previous form $\Omega_{\mu\nu}=\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu}$. So we can naturally define the Berry curvature for non-Abelian scenario as:\begin{equation}
-    \Omega_{\mu\nu}=\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu}+i[\mathcal{A}_\mu,\mathcal{A}_\nu]
-\end{equation}
-For non-Abelian Berry connection, the corresponding vector is identically defined as previous one. Up to now, we have spent two sections doing the theoretical framework, now let's move on to its applications, which cover a wide range of novel topics in condensed matter physics.
-\section{Aharonov-Bohm Effect}
-In classical electrodynamics the potentials (both scalar and vector) are not directly measurable. Instead, the physical quantities are the electric and magnetic fields:\begin{equation}
-    \mathbf{E}=-\nabla{\varphi}-\frac{\partial{\mathbf{A}}}{\partial{t}},~~~\mathbf{B}=\nabla\times\mathbf{A}
-\end{equation}
-As is known to us all, gauge transformation has no effect on the fields. In non-relativistic quantum mechanics, the potentials play a more significant role, for the Hamiltonian is expressed as:\begin{equation}
-    \hat{H}=\frac1{2m}(-i\hbar\nabla-\frac{e}{c}\mathbf{A})^2+e\varphi
-\end{equation}
-Nevertheless, the theory remains gauge-invariant, and for a long time it was taken for granted that there would be no electromagnetic influences in regions where $\mathbf{E}$ and $\mathbf{B}$ are zero. But in 1959, Aharonov and Bohm showed that the vector potential can affect the quantum behavior of a charged particle even when it's moving through a region where the field itself is zero. We're going to discuss this charming effect and indicate how it all relates to Berry phase. Let's begin with the time-dependent Schr\"odinger equation with the presence of electromagnetic field:\begin{equation}
-    [\frac1{2m}(-i\hbar\nabla-\frac{e}{c}\mathbf{A})^2+V]\psi=i\hbar\frac{\partial\psi}{\partial{t}}
-\end{equation}
-where the potential energy $V$ may or may not include an electrical contribution $e\varphi$. This slightly complicated expression can be simplified by introducing a transformation:\begin{equation}
-    \psi=e^{ig}\psi'
-\end{equation}
-where\begin{equation}
-    g(\mathbf{r})=\frac{e}{c\hbar}\int_{\mathcal{O}}^{\mathbf{r}}\mathbf{A}(\mathbf{r}')\cdot{d\mathbf{r}'}
-\end{equation}
-and $\mathcal{O}$ is an arbitrarily chosen reference point. Note this definition makes sense only when the curl of $\mathbf{A}$ vanishes throughout the region. After some calculation, we derived:\begin{equation}
-    (-i\hbar\nabla-\frac{e}{c}\mathbf{A})^2(e^{ig}\psi')=-\hbar^2e^{ig}\nabla^2\psi
-\end{equation}
-Substituting equation (62) into (59), and cancelling the common factor, we are left with:\begin{equation}
-    (-\frac{\hbar^2}{2m}\nabla^2+V)\psi'=i\hbar\frac{\partial\psi'}{\partial{t}}
-\end{equation}
-Evidently, $\psi'$ satisfies the Schr\"odinger equation without $\mathbf{A}$. If we have solved equation (63), correcting for the presence of a curl-free vector potential will be trivial: Just attach a phase factor $e^{ig}$ to the solution. Aharonov and Bohm proposed an experiment in which a beam of electrons is split in two, and passed either side of a long solenoid before being recombined. They were kept away from the solenoid an therefore encounter only regions where the magnetic field $\mathbf{B}$ is 0. But according to our statement, the non-zero vector potential $\mathbf{A}$ makes these two beams recombine with completely distinct phases:\begin{equation}
-    g=\frac{e}{c\hbar}\int\mathbf{A}\cdot{d\mathbf{r}}=\pm\frac{e\Phi}{2c\pi\hbar}\int_0^\pi{d\phi}=\pm\frac{e\Phi}{2c\hbar}
-\end{equation}
-The plus sign applies to the electrons traveling in the same direction as the current in the solenoid and vice versa. Consequently, the beams arrive out of a phase by an amount proportional to the magnetic flux their paths encircle:\begin{equation}
-    \gamma=\frac{e\Phi}{c\hbar}
-\end{equation}
-As Berry pointed out in his first paper on the subject, the A-B effect can be regarded as an example of geometric phase. Suppose the charged particle is confined to a box (which is centered at point $\mathbf{R}$ outside the solenoid) by a potential $V(\mathbf{r}-\mathbf{R})$. The eigenfunctions of the Hamiltonian are determined by\begin{equation}
-    [\frac1{2m}(-i\hbar\nabla-\frac{e}{c}\mathbf{A}(\mathbf{r}))^2+V(\mathbf{r}-\mathbf{R})]\psi_n=E_n\psi_n
-\end{equation}
-Applying the same method as previous, let $\psi_n=e^{ig}\psi'_n$, where\begin{equation}
-    g=\frac{e}{c\hbar}\int_{\mathbf{R}}^{\mathbf{r}}\mathbf{A}(\mathbf{r}')\cdot{d\mathbf{r}'}
-\end{equation}
-In this way, $\psi'_n$ satisfies the following equation:\begin{equation}
-    [-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r}-\mathbf{R})]\psi'_n=E_n\psi'_n
-\end{equation}
-Notice that unlike $\psi_n$, $\psi'_n$ is a function only of the displacement $(\mathbf{r}-\mathbf{R})$. Now let's carry the box around the solenoid. To determine the Berry phase we must first evaluate the quantity $\braket{\psi_n|\nabla_R\psi_n}$ since the varying parameter of Hamiltonian is precisely $\mathbf{R}$. In fact, we have:\begin{equation}
-    \nabla_R\psi_n=\nabla_R[e^{ig}\psi'_n(\mathbf{r}-\mathbf{R})]=-\frac{ie}{c\hbar}\mathbf{A}(\mathbf{R})e^{ig}\psi'_n(\mathbf{r}-\mathbf{R})+e^{ig}\nabla_R\psi'_n(\mathbf{r}-\mathbf{R})
-\end{equation}
-Thus\begin{equation}
-    \braket{\psi_n|\nabla_R\psi_n}=-\frac{ie}{c\hbar}\mathbf{A}(\mathbf{R})-\int[\psi'_n(\mathbf{r}-\mathbf{R})]^*\nabla\psi'_n(\mathbf{r}-\mathbf{R})d^3\mathbf{r}
-\end{equation}
-Please be aware that the $\nabla$ with no subscript denotes the gradient with respect to $\mathbf{r}$, and I used to fact that $\nabla_R=-\nabla$ when acting on a function of $(\mathbf{r}-\mathbf{R})$. It's also evident that the last integral is proportional to the expectation value of momentum, which is zero in an eigenstate of the Hamiltonian. In a nutshell, we obtained:\begin{equation}
-    \braket{\psi_n|\nabla_R\psi_n}=-\frac{ie}{c\hbar}\mathbf{A}(\mathbf{R})
-\end{equation}
-Putting this into equation (31), we conclude that\begin{equation}
-    \gamma_n(C)=\frac{e}{c\hbar}\oint\mathbf{A}(\mathbf{R})\cdot{d\mathbf{R}}=\frac{e\Phi}{c\hbar}
-\end{equation}
-which neatly confirms equation (65), and reveals that the Aharonov-Bohm effect is a particular instance of geometric phase.
-\section{Degeneracies and Level Crossing}
-Another important applications of the Berry phase is the classification of degeneracies. This will be one of the main ingredients of band crossings in topological band theory. if the denominator of equation (48) is close to zero, we now show that this level degeneracy point corresponds to a monopole in the parameter-space. Because the denominator of equation (48) is made of two-level terms, the generic degeneracy point is at the intersection of two levels as we vary $\mathbf{R}$. For this reason, two-level systems will appear repeatedly in the research of quantum topological materials.\\
-\\
-Consider two states $\ket{\psi_\pm}$, of energies $E_+(\mathbf{R})\geq{E_-(\mathbf{R})}$ with a degeneracy $E_+(\mathbf{R^*})=E_-(\mathbf{R^*})$. For $\mathbf{R}$ close to the degeneracy point, the Hamiltonian can be expanded in $\mathbf{R}-\mathbf{R^*}$ as\begin{equation}
-    H(\mathbf{R})\approx{H(\mathbf{R^*})}+(\mathbf{R}-\mathbf{R^*})\cdot\nabla{H(\mathbf{R^*})}
-\end{equation}
-Thereby giving the following for the corresponding vector of the Berry curvature:\begin{equation}
-    \mathbf{\Omega}_+(\mathbf{R})=-\Im\frac{\bra{\psi_+(\mathbf{R})}(\nabla{H(\mathbf{R^*})})\ket{\psi_-(\mathbf{R})}\times\bra{\psi_-(\mathbf{R})}(\nabla{H(\mathbf{R^*})})\ket{\psi_+(\mathbf{R})}}{(E_+(\mathbf{R})-E_-(\mathbf{R}))^2}
-\end{equation}
-Meanwhile, the generic form of the Hamiltonian of any two level system is\begin{equation}
-    \hat{H}=\epsilon(\mathbf{R})I_{2\times2}+\mathbf{d}(\mathbf{R})\cdot\mathbf{\sigma}
-\end{equation}
-where $\sigma^i$ are the Pauli matrices and $\mathbf{d}\mathbf{R}$ is a three-dimensional vector that depends on the coordinates $\mathbf{R}$. This Hamiltonian describes many interesting systems in condensed matter physics such as graphene, spin-orbit-coupled systems, a spin-1/2 electron in a magnetic field and many others. Notice that the constant term $\epsilon(\mathbf{R})$ is just an additive term, which can be neglected because it does not modify the eigenstates and also cancels in the subtraction of level energies. Let us now determine the Berry phase upon varying the parameters $\mathbf{R}$ by equation (48) and look into its physical intrinsic properties. We can take $\mathbf{d}(\mathbf{R})=\mathbf{R}$, and the Hamiltonian will take the form (in spherical coordinates)\begin{equation}
-    \hat{H}=x\hat{\sigma}_x+y\hat{\sigma}_y+z\hat{\sigma}_z=R
-    \begin{bmatrix}
-    \cos\theta & \sin\theta{e^{-i\phi}} \\
-    \sin\theta{e^{i\phi}} & -\cos\theta
-    \end{bmatrix}
-\end{equation}
-The eigenstates and corresponding eigenvalues are as follows (in spin space):\begin{equation}
-    \hat{H}\ket{\psi_+}=\hat{H}(\cos{\frac{\theta}2}\ket{\uparrow}+\sin{\frac{\theta}2e^{i\phi}}\ket{\downarrow})=R\ket{\psi_+}
+    \nabla\cdot\mathbf{B}=0
 \end{equation}\begin{equation}
-    \hat{H}\ket{\psi_-}=\hat{H}(\sin{\frac{\theta}2e^{-i\phi}}\ket{\uparrow}-\cos{\frac{\theta}2}\ket{\downarrow})=-R\ket{\psi_-}
+    \nabla\times\mathbf{H}=\mathbf{j}+\varepsilon\frac{\partial\mathbf{E}}{\partial{t}}=\sigma\mathbf{E}\delta(z-z_0)+\varepsilon\frac{\partial{\mathbf{E}}}{\partial{t}}
 \end{equation}
-It is evident that the degeneracy is an isolated point at which all three coordinates $(x, y, z)$ vanish. We also have $\nabla{H}=\mathbf{\sigma}$. Put all these into equation (74), we have\begin{equation}
-    \mathbf{\Omega}_+(\mathbf{R})=-\Im\frac{2i(\sin\theta\cos\phi\vec{i}+\sin\theta\sin\phi\vec{j}+\cos\theta\vec{k})}{4R^2}=-\frac{\mathbf{R}}{2R^3}
+We use the superscript $R$ and $L$ to distinguish right and left side of the interface and $+(-)$ to denote the direction of light propagation. By approximating the relative permeability constant in each region to 1, the electric and magnetic fields are given by (notice the wave vector is no longer perpendicular to the surface. But for simplicity, we just let the $k_y$ of the incident light be 0, so that the $k_y$ of both transmitted light and reflected light vanish)\begin{equation}
+    \mathbf{B}^{+L}=\frac{n_L}{c}[-{E}_y^{+L}\cos\theta\hat{x}+(E_x^{+L}\cos\theta-E_z^{+L}\sin\theta)\hat{y}+E_y^{+L}\sin\theta\hat{z}]
+\end{equation}\begin{equation}
+    \mathbf{B}^{-L}=\frac{n_L}{c}[{E}_y^{-L}\cos\theta\hat{x}+(-E_x^{-L}\cos\theta-E_z^{-L}\sin\theta)\hat{y}+E_y^{-L}\sin\theta\hat{z}]
+\end{equation}\begin{equation}
+    \mathbf{B}^{+R}=\frac{n_R}{c}[-{E}_y^{+R}\cos\phi\hat{x}+(E_x^{+R}\cos\phi-E_z^{+R}\sin\phi)\hat{y}+E_y^{+R}\sin\phi\hat{z}]
+\end{equation}\begin{equation}
+    \mathbf{B}^{-R}=\frac{n_R}{c}[{E}_y^{-R}\cos\phi\hat{x}+(-E_x^{-R}\cos\phi-E_z^{-R}\sin\phi)\hat{y}+E_y^{-R}\sin\phi\hat{z}]
 \end{equation}
-which is absolutely equivalent to a monopole of strength -1/2 located at the origin of the degeneracy. This corresponding vector gives the Berry phase generated merely from varying parameter $\mathbf{R}$:\begin{equation}
-    \gamma_+(C)=-\int_C\frac{\vec{e}_r}{2R^2}\cdot{d\mathbf{S}}=-\frac12\Omega(C)
+where $\theta$ and $\phi$ represent the angle between the incident light, transmitted light and the interface normal, respectively, and they're connected through the law of refraction\begin{equation}
+    n_L\sin\theta=n_R\sin\phi
+\end{equation} Moreover, from the Maxwell equations we can derive the boundary conditions for $\mathbf{E}$ and $\mathbf{B}$\begin{equation}
+    E_z^R-E_z^L=\frac{\sigma_{xy}}{\varepsilon_0}B_z^L
+\end{equation}\begin{equation}
+    E_x^R=E_x^L
+\end{equation}\begin{equation}
+    E_y^R=E_y^L
+\end{equation}\begin{equation}
+    B_x^L-B_x^R=\mu_0\sigma_{xy}E_x
+\end{equation}\begin{equation}
+    B_y^L-B_y^R=\mu_0\sigma_{xy}E_y
+\end{equation}\begin{equation}
+    B_z^L=B_z^R
 \end{equation}
-where $\Omega(C)$ is the solid angle that $C$ subtends at the degeneracy point.\\
-\\
-We will now illustrate the preceding derivation with the case of a Dirac-Weyl fermion. These fermions have a Hamiltonian which in three-space dimensions reads $k_i\sigma_i$, where $k$ is Brillouin zone momentum. We ask what happens to the wavefunction of a Dirac fermion as it is transported around a path $C$ in the momentum space. It will acquire a phase, the Berry phase. We now assume that the path $C$ is confined to the $xy$-plane. In this case, the solid angle subtended by the curve in closed space is $2\pi$ if the curve encircles the degeneracy and zero if it does not, with the Berry phase being $\pm1$ in the two cases, respectively. Also notice that the choice of contour is arbitrary as long as it is closed.
+All components of electric field and magnetic field is unknown, which add up to 24 unknowns. To derive the transfer matrix, we set the incident components as known. Then the number of equations (18 equations) matches the unknowns.
+\section{Transfer Matrices}
+The boundary conditions obtained in section 1 are used in this section to derive the transfer matrix when light propagates through the interfaces. Since the z-component of electric field has a strict geometric constraint, or more precisely, uniquely determined by the incident angle and the x-component of electric field (two of our controllable variables). Moreover, through calculation, we find that the tangential components on the right side of the interface are uniquely determined by that on the left side. So if we just concern about the tangential components, the transfer matrix is still $4\times4$.\begin{equation}\renewcommand{\arraystretch}{1.7}
+\begin{pmatrix}
+    E_x^{+R}\\
+    E_y^{+R}\\
+    E_x^{-R}\\
+    E_y^{-R}
+    \end{pmatrix}=\mathrm{T^I}\begin{pmatrix}
+    E_x^{+L}\\
+    E_y^{+L}\\
+    E_x^{-L}\\
+    E_y^{-L}
+    \end{pmatrix}
+\end{equation}
+where the transfer matrix $\mathrm{T^I}(n_L,n_R,\sigma_{xy},\theta)$ are displayed as\begin{equation}\renewcommand{\arraystretch}{1.9}
+    \mathrm{T^I}=\frac12\begin{pmatrix}
+    1+\frac{n_L\cos\theta}{n_R\cos\phi} & \frac{2\alpha\sigma_{xy}(n_L^2\sin^2\theta-1)}{n_R\cos\phi} & 1-\frac{n_L\cos\theta}{n_R\cos\phi} & \frac{2\alpha\sigma_{xy}(n_L^2\sin^2\theta-1)}{n_R\cos\phi}\\
+    \frac{2\alpha\sigma_{xy}}{n_R\cos\phi} & 1+\frac{n_L\cos\theta}{n_R\cos\phi} & \frac{2\alpha\sigma_{xy}}{n_R\cos\phi} & 1-\frac{n_L\cos\theta}{n_R\cos\phi}\\
+    1-\frac{n_L\cos\theta}{n_R\cos\phi} & -\frac{2\alpha\sigma_{xy}(n_L^2\sin^2\theta-1)}{n_R\cos\phi} & 1+\frac{n_L\cos\theta}{n_R\cos\phi} & -\frac{2\alpha\sigma_{xy}(n_L^2\sin^2\theta-1)}{n_R\cos\phi}\\
+    -\frac{2\alpha\sigma_{xy}}{n_R\cos\phi} & 1-\frac{n_L\cos\theta}{n_R\cos\phi} & -\frac{2\alpha\sigma_{xy}}{n_R\cos\phi} & 1+\frac{n_L\cos\theta}{n_R\cos\phi}
+    \end{pmatrix}
+\end{equation}
+The Hall conductivity $\sigma_{xy}$ is in a unit of $\frac{e^2}{h}$. Then, considering the interference of the light due to multiple reflections inside the film, the transfer matrix for the propagation in the topological insulator bulk can be regarded as an identity matrix since we're calculating all these things based on the long-wavelength approximation. The total transfer matrix is given by the product of the transfer matrices\begin{equation}
+    \mathrm{T^{total}}=\mathrm{T^I}(n_f,n_s,\sigma_{xy}^b,\phi)\mathrm{T^I}(n_v,n_f,\sigma_{xy}^t,\theta)
+\end{equation}\begin{equation}\renewcommand{\arraystretch}{2.1}
+    \mathrm{T^{total}}=\frac12\begin{pmatrix}
+    1+\frac{n_v\cos\theta}{n_s\cos\gamma} & \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_v^2\sin^2\theta-1)}{n_s\cos\gamma} & 1-\frac{n_v\cos\theta}{n_s\cos\gamma} & \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_v^2\sin^2\theta-1)}{n_s\cos\gamma}\\
+    \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma} & 1+\frac{n_v\cos\theta}{n_s\cos\gamma} & \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma} & 1-\frac{n_v\cos\theta}{n_s\cos\gamma}\\
+    1-\frac{n_v\cos\theta}{n_s\cos\gamma} & -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_v^2\sin^2\theta-1)}{n_s\cos\gamma} & 1+\frac{n_v\cos\theta}{n_s\cos\gamma} & -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_v^2\sin^2\theta-1)}{n_s\cos\gamma}\\
+    -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma} & 1-\frac{n_v\cos\theta}{n_s\cos\gamma} & -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma} & 1+\frac{n_v\cos\theta}{n_s\cos\gamma}
+    \end{pmatrix}
+\end{equation}
+where the angles follow the law of refraction\begin{equation}
+    n_v\sin\theta=n_f\sin\phi=n_s\sin\gamma
+\end{equation}
+We can do a little estimation here. The thickness of the substrate is about 300 $\mu$m, but the duration of laser pulse is merely 100 fs. So the reflected wave from the back interface of the substrate is negligible when calculating the Faraday rotation angle. In this way, the transmitted and reflected light are related by the following equation\begin{equation}\renewcommand{\arraystretch}{1.7}
+\begin{pmatrix}
+    E_x^t\\
+    E_y^t\\
+    0\\
+    0
+    \end{pmatrix}=\mathrm{T^{total}}\begin{pmatrix}
+    E_x^i\\
+    0\\
+    E_x^r\\
+    E_y^r
+    \end{pmatrix}
+\end{equation}
+That is\begin{equation}
+    2E_x^t=(1+\frac{n_v\cos\theta}{n_s\cos\gamma})E_x^i+(1-\frac{n_v\cos\theta}{n_s\cos\gamma})E_x^r+\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_v^2\sin^2\theta-1)}{n_s\cos\gamma}E_y^r
+\end{equation}\begin{equation}
+    2E_y^t=\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma}E_x^i+\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma}E_x^r+(1-\frac{n_v\cos\theta}{n_s\cos\gamma})E_y^r
+\end{equation}\begin{equation}
+    0=(1-\frac{n_v\cos\theta}{n_s\cos\gamma})E_x^i+(1+\frac{n_v\cos\theta}{n_s\cos\gamma})E_x^r-\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_v^2\sin^2\theta-1)}{n_s\cos\gamma}E_y^r
+\end{equation}\begin{equation}
+    0=-\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma}E_x^i-\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma}E_x^r+(1+\frac{n_v\cos\theta}{n_s\cos\gamma})E_y^r
+\end{equation}
+We get the Faraday rotation angle as\begin{equation}
+    \tan\theta_F=\frac{E_y^t}{E_x^t}=\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_s\cos\gamma+n_v\cos\theta}
+\end{equation}
+The influence on Faraday rotation angle caused by the back interface is also negligible due to our previous estimation since we're focusing only on the amplitudes of $E_y$ and $E_x$. The same applies to the Kerr rotation where the light is reflected at the substrate interface after experiencing the Faraday rotation. In this case, the total transfer matrix is rewritten as\begin{equation}
+    \mathrm{T^{total}}=\mathrm{T^I}(n_f,n_v,\sigma_{xy}^t,\phi)\mathrm{T^I}(n_s,n_f,\sigma_{xy}^b,\gamma)
+\end{equation}\begin{equation}\renewcommand{\arraystretch}{2.1}
+    \mathrm{T^{total}}=\frac12\begin{pmatrix}
+    1+\frac{n_s\cos\gamma}{n_v\cos\theta} & \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_s^2\sin^2\gamma-1)}{n_v\cos\theta} & 1-\frac{n_s\cos\gamma}{n_v\cos\theta} & \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_s^2\sin^2\gamma-1)}{n_v\cos\theta}\\
+    \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_v\cos\theta} & 1+\frac{n_s\cos\gamma}{n_v\cos\theta} & \frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_v\cos\theta} & 1-\frac{n_s\cos\gamma}{n_v\cos\theta}\\
+    1-\frac{n_s\cos\gamma}{n_v\cos\theta} & -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_s^2\sin^2\gamma-1)}{n_v\cos\theta} & 1+\frac{n_s\cos\gamma}{n_v\cos\theta} & -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_s^2\sin^2\gamma-1)}{n_v\cos\theta}\\
+    -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_v\cos\theta} & 1-\frac{n_s\cos\gamma}{n_v\cos\theta} & -\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_v\cos\theta} & 1+\frac{n_s\cos\gamma}{n_v\cos\theta}
+    \end{pmatrix}
+\end{equation}In our measurement, the Kerr and Faraday rotation are combined together when we're obtaining the different components of the delayed second pulse. So here we shall still let $\theta$ to be the only variable. The transmitted and reflected light are related by following four equations\begin{equation}
+    2E_x^t=(1+\frac{n_s\cos\gamma}{n_v\cos\theta})E_x^i+(1-\frac{n_s\cos\gamma}{n_v\cos\theta})E_x^r+\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_s^2\sin^2\gamma-1)}{n_v\cos\theta}E_y^r
+\end{equation}\begin{equation}
+    2E_y^t=\frac{2\alpha(\sigma_{xy}^t+\sigma_xy^{b})}{n_v\cos\theta}E_x^i+\frac{2\alpha(\sigma_{xy}^t+\sigma_xy^{b})}{n_v\cos\theta}E_x^r+(1-\frac{n_s\cos\gamma}{n_v\cos\theta})E_y^r
+\end{equation}\begin{equation}
+    0=(1-\frac{n_s\cos\gamma}{n_v\cos\theta})E_x^i+(1+\frac{n_s\cos\gamma}{n_v\cos\theta})E_x^r-\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)(n_s^2\sin^2\gamma-1)}{n_v\cos\theta}E_y^r
+\end{equation}\begin{equation}
+    0=-\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_v\cos\theta}E_x^i-\frac{2\alpha(\sigma_{xy}^t+\sigma_{xy}^b)}{n_v\cos\theta}E_x^r+(1+\frac{n_s\cos\gamma}{n_v\cos\theta})E_y^r
+\end{equation}
+We get the Kerr rotation angle as\begin{equation}
+    \tan\theta_K=\frac{4\alpha{n_s}(\sigma_{xy}^t+\sigma_{xy}^b)\cos\gamma}{n_s^2\cos^2\gamma-n_v^2\cos^2\theta+4\alpha^2(\sigma_{xy}^t+\sigma_{xy}^b)^2(n_s^2\sin^2\gamma-1)}
+\end{equation}
+or a more simplified form\begin{equation}
+    \tan\theta_K=\frac{4\alpha{n_s}(\sigma_{xy}^t+\sigma_{xy}^b)\cos\gamma}{n_s^2-n_v^2+4\alpha^2(\sigma_{xy}^t+\sigma_{xy}^b)^2(n_v^2\sin^2\theta-1)}
+\end{equation}
+\section{Discussion}
+If we're talking about the Streda scenario, then both $\sigma_{xy}^t$ and $\sigma_{xy}^b$ are $\frac12(\frac{e^2}{h})$, which means (refractive index for vacuum is 1)
+\begin{equation}
+    \tan\theta_F=\frac{2\alpha}{n_s\cos\gamma+\cos\theta}=\frac{2\alpha}{\sqrt{n_s^2-\sin^2\theta}+\cos\theta}
+\end{equation}\begin{equation}
+    \tan\theta_K=\frac{4\alpha{n_s}\cos\gamma}{n_s^2-1-4\alpha^2\cos^2\theta}=\frac{4\alpha\sqrt{n_s^2-\sin^2\theta}}{n_s^2-1-4\alpha^2\cos^2\theta}
+\end{equation}
+Since the fine structure constant $\alpha\approx\frac{1}{137}$, so it's quite reasonable to validate the following approximation\begin{equation}
+    \theta_F\approx\arctan{\frac{2\alpha}{\sqrt{n_s^2-\sin^2\theta}+\cos\theta}}
+\end{equation}\begin{equation}
+    \theta_K\approx\arctan{\frac{4\alpha\sqrt{n_s^2-\sin^2\theta}}{n_s^2-1}}
+\end{equation}
+While these two quantities depend on the refractive index of the substrate, we can extract $\alpha$ by combining them\begin{equation}
+    \alpha=\frac{\tan\theta_F\tan\theta_K-\tan^2\theta_F}{\tan\theta_K-2\tan\theta_F}\cos\theta
+\end{equation}
+If we further assume the incident angle is small enough to validate the approximation $\sin\theta\approx\theta$, then we have\begin{equation}
+    \theta_F=\arctan{\frac{2\alpha}{n_s+1}}+\mathcal{O}(\alpha\theta^2)
+\end{equation}\begin{equation}
+    \theta_K=\arctan{\frac{4\alpha{n_s}}{n_s^2-1}}+\mathcal{O}(\alpha\theta^2)
+\end{equation}
+If this assumption is invalid, the following plot might help. This figure precisely corresponds to Mogi's doctoral thesis when $\theta=0$.\begin{figure}[htb]
+\centering
+\includegraphics[width=1.05\columnwidth,height=0.7\linewidth]{plot_of_faraday_and_kerr_rotations.png}
+\caption{Relation between Rotation Angles and Incident Angles}
+\label{fig}
+\end{figure}
 \end{document}
