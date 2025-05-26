@@ -3,285 +3,635 @@
 \usepackage{braket}
 \usepackage{amsthm}
 \usepackage{amsmath}
-
-\title{Adiabatic Processes and Berry Phase}
+\title{Band Theory}
 \author{Amamiya Masumi}
-\date{February 2025}
+\date{2025 Spring}
 
 \begin{document}
 
 \maketitle
 
-\section{Adiabatic Theorem}
-The gradual change of the external conditions defines an adiabatic process. Let's begin our adventure towards one of the most fascinating and enchanting concept in the field of condensed matter physics, the Berry Phase first by introducing ourselves to some crucial theorems.\\
+\section{Bloch Theorem}
+From the perspectives of modern solid-state physics, all electrons in solid are no longer bound to atoms, but move in the whole solid system, instead. The atoms are placed at balanced positions, and tiny deviation to which are considered as perturbations. The lattice is therefore periodic, resulting in the periodicity of $V(\mathbf{r})$. The wave equation of a single electron is written as:\begin{equation}
+    [-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r})]\psi(\mathbf{r})=E\psi(\mathbf{r})
+\end{equation}
+with a periodic potential\begin{equation}
+    V(\mathbf{r})=V(\mathbf{r}+\mathbf{R}_n)
+\end{equation}
+where $\mathbf{R}_n$ is an arbitrarily picked Bravais lattice vector with the expression as\begin{equation}
+    \mathbf{R}_n=u_1\mathbf{a}_1+u_2\mathbf{a}_2+u_3\mathbf{a}_3
+\end{equation}
+\textbf{(Bloch Theorem)} If potential field $V(\mathbf{r})$ is periodic as $V(\mathbf{r})=V(\mathbf{r}+\mathbf{R}_n)$, the solution $\psi(\mathbf{r})$ of the wave equation satisfies\begin{equation}
+    \psi(\mathbf{r}+\mathbf{R}_n)=e^{i\mathbf{k}\cdot\mathbf{R}_n}\psi(\mathbf{r})
+\end{equation}
+where $\mathbf{k}$ is a vector.\\
 \\
-\textbf{(First Adiabatic Theorem)} If a particle was initially in the nth eigenstate of $\hat{H}^i$, which represents the initial Hamiltonian of the system (suppose the spectrum is discrete and non-degenerate), it'll be carried (under the Schr\"odinger equation) into the nth eigenstate of $\hat{H}^f$, which represents the final Hamiltonian of the system, if the Hamiltonian changes gradually, validating the adiabatic approximation.
-\begin{proof} If $\hat{H}$ changes with time, both eigenstates and eigenvalues are time-dependent:\begin{equation}
-    \hat{H}(t)\ket{\psi_n(t)}=E_n(t)\ket{\psi_n(t)}
+According to Bloch Theorem, $\psi(\mathbf{r})$ can be expressed as\begin{equation}
+    \psi(\mathbf{r})=e^{i\mathbf{k}\cdot\mathbf{r}}u(\mathbf{r})
 \end{equation}
-But they still constitute (at any particular instant) an orthonormal yet complete set:\begin{equation}
-    \braket{\psi_n(t)|\psi_m(t)}=\delta_{mn}
+where $u(\mathbf{r})$ shares the same periodicity with lattice (and of course, the potential field $V(\mathbf{r})$), namely $u(\mathbf{r})=u(\mathbf{r}+\mathbf{R}_n)$. Equation (5) is called the Bloch function, which is the product of a plane wave and a periodic function. Now let's prove the Bloch Theorem.
+\begin{proof} First of all, let's introduce some operators describing the translation transformation $T_1,T_2,T_3$. They're defined as follows:\begin{equation}
+    T_{i}f(\mathbf{r})=f(\mathbf{r}+\mathbf{a}_i),~i=1,2,3
 \end{equation}
-So the general solution to the time-dependent Schr\"odinger equation can be expanded in a linear combination of them:\begin{equation}
-    \Psi(t)=\sum_n{c_n(t)\psi_n(t)e^{i\theta_n(t)}} 
+where $\mathbf{a}_i$ are the lattice base vectors. It's trivial that these translation operators are commutable. Since the Hamiltonian also turns out to have the translation invariance and is therefore commutable with those translation operators, according to primary principles of quantum mechanics, we are bound to find the common eigenstate $\psi$ of these operators, namely\begin{equation}
+    \hat{H}\psi=E\psi,~T_i\psi=\lambda_i\psi
 \end{equation}
-where\begin{equation}
-    \theta_n(t)=-\frac{1}{\hbar}\int_{0}^{t}E_n(t')dt'
+To fully determine eigenvalues $\lambda_i$, we introduce some periodic boundary conditions. Specifically, for $i=1,2,3$, we have\begin{equation}
+    \psi(\mathbf{r})=\psi(\mathbf{r}+N_i\mathbf{a}_i)
 \end{equation}
-is the dynamical phase. Substituting equation (3) into (1) and cancelling out the identical terms, we obtained:\begin{equation}
-    \sum_n{\dot{c}_n(t)\psi_n(t)e^{i\theta_n(t)}}=-\sum_n{c_n(t)\dot{\psi}_n(t)e^{i\theta_n(t)}}
+where $N_i$ symbolizes the number of primitive cell along the direction of lattice vector $\mathbf{a}_i$. In this way, the total number of primitive cell is $N=N_1N_2N_3$. The eigenvalues are therefore strictly constrained by the periodicity of boundary conditions\begin{equation}
+    \psi(\mathbf{r}+N_i\mathbf{a}_i)=T_i^{N_i}\psi(\mathbf{r})=\lambda_i^{N_i}\psi(\mathbf{r})=\psi(\mathbf{r})
 \end{equation}
-Taking the inner product with $\psi_m(t)$, and utilizing the orthonormality of the instantaneous eigenstates, we have:\begin{equation}
-    \sum_n\dot{c}_n(t)\delta_{mn}e^{i\theta_n(t)}=-\sum_n{c_n(t)\braket{\psi_m(t)|\dot{\psi}_n(t)}e^{i\theta_n(t)}}
+Which means the eigenvalues $\lambda_i$ of the translation operator $T_i$ has got to take the following form\begin{equation}
+    \lambda_i=e^{2\pi{i}\frac{l_i}{N_i}}
 \end{equation}
-namely,\begin{equation}
-    \dot{c}_m(t)=-\sum_n{c_n(t)\braket{\psi_m(t)|\dot{\psi}_n(t)}e^{i(\theta_n(t)-\theta_m(t))}}
+where $l_i$ are integers. If we introduce vector\begin{equation}
+    \mathbf{k}=\frac{l_1}{N_1}\mathbf{b}_1+\frac{l_2}{N_2}\mathbf{b}_2+\frac{l_3}{N_3}\mathbf{b}_3
 \end{equation}
-Differentiating equation (1) with respect to time and taking inner product with $\psi_m(t)$ yields:\begin{equation}
-    \bra{\psi_m}\dot{H}\ket{\psi_n}+\bra{\psi_m}H\ket{\dot{\psi}_n}=\dot{E_n}\delta_{mn}+E_n\braket{\psi_m|\dot{\psi}_n}
+where vector $\mathbf{b}_i$ are the reciprocal lattice vectors, recalling the relation $\mathbf{a}_i\cdot\mathbf{b}_j=2\pi\delta_{ij}$, we have\begin{equation}
+    \psi(\mathbf{r}+\mathbf{R}_n)=T_1^{u_1}T_2^{u_2}T_3^{u_3}\psi(\mathbf{r})=e^{i\mathbf{k}\cdot\mathbf{R}_n}\psi(\mathbf{r})
 \end{equation}
-For $n\neq{m}$, we have:\begin{equation}
-    \bra{\psi_m}\dot{H}\ket{\psi_n}=(E_n-E_m)\braket{\psi_m|\dot{\psi}_n}
-\end{equation}
-Putting this into equation (7), we conclude that\begin{equation}
-    \dot{c}_m(t)=-c_m(t)\braket{\psi_m|\dot{\psi}_m}-\sum_{n\neq{m}}c_n(t)\frac{\bra{\psi_m}\dot{H}\ket{\psi_n}}{E_n-E_m}e^{i(\theta_n(t)-\theta_m(t))}
-\end{equation}
-Now is exactly when adiabatic approximation works: We assume that $\dot{H}$ is extremely small that we simply drop the second term entirely, leaving\begin{equation}
-    \dot{c}_m(t)=-c_m\braket{\psi_m|\dot{\psi}_m}
-\end{equation}
-Given the initial conditions, we obtained the solution:\begin{equation}
-    c_m(t)=c_m(0)e^{i\gamma_m(t)}
-\end{equation}
-where\begin{equation}
-    \gamma_m(t)=i\int_{0}^{t}\braket{\psi_m(t')|\dot{\psi}_m(t')}dt'
-\end{equation}
-Since the inner product in the integral is trivially imaginary, the phase factor $\gamma_m(t)$ is incontrovertibly real. In particular, if the particle starts out in the nth eigenstate, then according to the equation (3) and (12), it remains in the nth eigenstate, picking up only a couple of phase factors. The first adiabatic theorem is therefore proved.
+where $\mathbf{k}$ is called the reduced wave vector. To explain its meaning, we can add a reciprocal lattice vector $G_n=v_1\mathbf{b}_1+v_2\mathbf{b}_2+v_3\mathbf{b}_3$ to $\mathbf{k}$, which does not affect the eigenvalues at all. Consequently, to render the one-to-one correspondence, we can confine vector $\mathbf{k}$ within the primitive cell of reciprocal lattice and in this way, the reduced wave vector serve as the quantum number that correspond to the eigenvalues of the translation operator. However, this is not most convenient method. Conventionally, we choose to confine vector $\mathbf{k}$ with in the first Brillouin Zone, which possesses more symmetry. Obviously, in the first Brillouin Zone, the number of reduced wave vector is $N$. In this way, we have proved the Bloch Theorem.
 \end{proof}
-But what if there's degeneracy in energy levels? Frankly speaking, complete non-degenerate system is not that common as we anticipated. In fact, if the energy levels are degenerate, the occasion becomes much more complicated immediately, which involves non-Abelian phases. The second adiabatic theorem (named by myself arbitrarily) in the follow will presents a comprehensive explanation of this scenario.\\
-\\
-\textbf{(Second Adiabatic Theorem)} If a particle was initially in one of the nth eigenstates of $\hat{H}^i$ (suppose the spectrum is discrete but processes degeneracy), then under time evolution, it can be transferred to other eigenstates in the same energy level with the initial state. That is to say, the state can rotate within the degenerate manifold.
-\begin{proof} Obviously, for $i$-th energy level and corresponding degeneracy $j$, all the eigenstates and eigenvalues are time-dependent:\begin{equation}
-    \hat{H}(t)\ket{\psi_{ij}(t)}=E_i(t)\ket{\psi_{ij}(t)}
+\section{Nearly Free Electron Approximation in 1D Periodic Field}
+The nearly free electron approximation assumes the fluctuation of periodic field is small enough that it's accurate enough to use the average field strength $\bar{V}$ as the zeroth approximation and treat the periodic fluctuation $V(x)-\bar{V}$ as perturbations. The wave function of zeroth approximation is\begin{equation}
+    -\frac{\hbar^2}{2m}\frac{d^2}{dx^2}\psi^0+\bar{V}\psi^0=E^0\psi^0
 \end{equation}
-Express the general solution to the time-dependent Schr\"odinger equation in a linear combination of the orthonormal and complete set consisting of all the eigenfunctions:\begin{equation}
-    \Psi(t)=\sum_{i,j}c_{ij}(t)\psi_{ij}(t)e^{i\theta_i(t)}
+and the solution to this equation is the 1D free particle. Assume the number of primitive cell is $N$ and the lattice constant is $a$. Let $L=Na$ and considering the periodic boundary conditions, we have the normalized solution\begin{equation}
+    \psi_k^0(x)=\frac{1}{\sqrt{L}}e^{ikx},~E_k^0=\frac{\hbar^2k^2}{2m}+\bar{V}
 \end{equation}
-Please pay attention that under this circumstance, all degenerate eigenstates share the same dynamic phase. Substituting equation (15) into (14) and cancelling out the identical terms, we obtained:\begin{equation}
-    \sum_{i,j}\dot{c}_{ij}(t)\psi_{ij}(t)e^{i\theta_i(t)}=-\sum_{i,j}c_{ij}(t)\dot{\psi}_{ij}(t)e^{i\theta_i(t)}
+where $k$ can only take the following value\begin{equation}
+    k=\frac{2\pi{l}}{Na}
 \end{equation}
-Taking the inner product with $\psi_{km}(t)$, and invoking the orthonormality of the instantaneous eigenstates, we have (please be aware that the notation $j$ is dependent of notation $i$):\begin{equation}
-    \sum_{i,j}\dot{c}_{ij}(t)\delta_{ik}\delta_{jm}e^{i\theta_i(t)}=-\sum_{i,j}c_{ij}(t)\braket{\psi_{km}(t)|\dot{\psi}_{ij}(t)}e^{i(\theta_i(t)-\theta_k(t))}
+Obviously, $l$ is an integer, and the orthonormality can easily be validated. Let $\Delta{V}=V(x)-\bar{V}$, according to the time-independent perturbation theory, the first order correction of energy is\begin{equation}
+    E_k^{(1)}=\bra{k}\Delta{V}\ket{k}=\int|\psi_k^0|^2(V(x)-\bar{V})dx=0
 \end{equation}
-Differentiating equation (14) with respect to time and taking the inner product with $\psi_{km}(t)$ yields:\begin{equation}
-    \bra{\psi_{km}}\dot{H}\ket{\psi_{ij}}+\bra{\psi_{km}}H\ket{\dot{\psi}_{ij}}=\dot{E_i}\delta_{ik}\delta_{jm}+E_i\braket{\psi_{km}|\dot{\psi}_{ij}}
+The second order correction of energy and the first order correction of wave function both require us to calculate the matrix element $\bra{k'}\Delta{V}\ket{k}=\bra{k'}V(x)\ket{k}$\begin{equation}
+    \bra{k'}V(x)\ket{k}=\frac{1}{L}\int_{0}^{L}e^{-i(k'-k)x}V(x)dx
 \end{equation}
-For $i\neq{k}$, we have:\begin{equation}
-    \bra{\psi_{km}}\dot{H}\ket{\psi_{ij}}=(E_i-E_k)\braket{\psi_{km}|\dot{\psi}_{ij}}
+Rewrite this integral with a partition of different primitive cell, and for different cell, introduce a variable $\xi=x-na$, where $n$ is the ranking of primitive cell. Take the periodicity of $V(x)$, we have\begin{equation}
+    \bra{k'}V(x)\ket{k}=(\frac{1}{a}\int_0^{a}e^{-i(k'-k)\xi}V(\xi)d\xi)\cdot\frac{1}{N}\sum_{n=0}^{N-1}[e^{-i(k'-k)a}]^n
 \end{equation}
-Putting this into equation (17), we conclude that\begin{equation}
-    \dot{c}_{km}(t)=-\sum_{n}c_{kn}(t)\braket{\psi_{km}|\dot{\psi}_{kn}}-\sum_{i\neq{k}}c_{ij}(t)\frac{\bra{\psi_{km}}\dot{H}\ket{\psi_{ij}}}{E_i-E_k}e^{i(\theta_i(t)-\theta_k(t))}
+If $k'-k=\frac{2n\pi}{a}$, the sum in equation (18) is evidently $1$. But if $k'-k\neq\frac{2n\pi}{a}$, the sum can be calculated as a proportion series\begin{equation}
+    \frac{1}{N}\sum_{n=0}^{N-1}[e^{-i(k'-k)a}]^n=\frac{1}{N}\frac{1-e^{-i(k'-k)Na}}{1-e^{-i(k'-k)a}}
 \end{equation}
-Recalling what we've done in proving the first adiabatic theorem, the second term naturally vanishes when we apply the adiabatic approximation, leaving\begin{equation}
-    \dot{c}_{km}(t)=-\sum_{n}c_{kn}(t)\braket{\psi_{km}|\dot{\psi}_{kn}}
+The denominator is obviously not $0$. For the numerator, we also have\begin{equation}
+    1-e^{-i(k'-k)Na}=1-e^{-2\pi{i}(l'-l)}=0
 \end{equation}
-The result is a group of differential equations. If we rewrite these equations in matrix form, with all the $c_{kn}(t)$ in the form of a vector $\mathbf{c_k}(t)$ and time-dependent matrix elements being\begin{equation}
-    \mathcal{A}_{mn}(t)=i\braket{\psi_{km}(t)|\dot{\psi}_{kn}(t)}
+In conclusion, if and only if $k'=k+\frac{2n\pi}{a}$, we will get a non-zero matrix element\begin{equation}
+    \bra{k'}V\ket{k}=\frac{1}{a}\int_0^{a}e^{-\frac{2n\pi{i}}{a}\xi}V(\xi)d\xi=V_n
 \end{equation}
-Then we obtained a rather decent form:\begin{equation}
-    \mathbf{\dot{c}_k}(t)=i\mathcal{A}(t)\mathbf{c_k}(t)
+We're also able to discover that $V_n$ is exactly the nth Fourier coefficient of the periodic field $V(x)$. The first order correction of wave function can also be expressed as\begin{equation}
+    \psi_k=\psi_k^{(0)}+\psi_k^{(1)}=\frac{1}{\sqrt{L}}e^{ikx}+\sum_{n\neq0}\frac{V_n}{\frac{\hbar^2}{2m}[k^2-(k+\frac{2n\pi}{a})^2]}\cdot\frac{1}{\sqrt{L}}e^{i(k+\frac{2n\pi}{a})x}
 \end{equation}
-Needless to say, this simplified form reminds us of the time-dependent quantum dynamical equation where the Hamiltonian is also time-dependent. Usually we would seek for solutions using the time-dependent perturbation theory. But for precise results, we need a special tool called the time-ordered product since the instantaneous Hamiltonian is typically non-Abelian, much similar to what we've encountered previously. The general solution to time-dependent Schr\"odinger equation using time-ordered product is:\begin{equation}
-    \ket{\psi(t)}=\mathcal{T}\mathrm{exp}(-\frac{i}{\hbar}\int_{t_0}^{t}\hat{H}(t')dt')\ket{\psi(t_0)}
+or in the form of Bloch function (product of a plane wave and a periodic function)\begin{equation}
+    \psi_k=\psi_k^{(0)}+\psi_k^{(1)}=\frac{1}{\sqrt{L}}e^{ikx}(1+\sum_{n\neq0}\frac{V_n}{\frac{\hbar^2}{2m}[k^2-(k+\frac{2n\pi}{a})^2]}e^{\frac{2n\pi{i}}{a}x})
 \end{equation}
-We can simply imitate and obtain the general solution to our scenario:\begin{equation}
-    \mathbf{c_k}(t)=\mathcal{T}\mathrm{exp}(i\int_{0}^{t}\mathcal{A}(t')dt')\mathbf{c_k}(0)
+The second order correction of energy is\begin{equation}
+    E_k^{(2)}=\sum_{n\neq0}\frac{|V_n|^2}{\frac{\hbar^2}{2m}[k^2-(k+\frac{2n\pi}{a})^2]}
 \end{equation}
-We can also discover by chance that the matrix $\mathcal{A}$ is exactly Hermitian, which also shares similarity with typical Hamiltonian. Now if the particle starts out in one degenerate energy state, then according to equation (15) and (25), it may be transferred to other eigenstates in the same energy level with the initial state, but undoubtedly remains in the degenerate manifold.
-\end{proof}
-Up to now we've demonstrated and scrupulously proved these two significant theorem which serve as the backbone of upcoming concepts such as Berry phase and Berry curvature. In the next chapter we'll discuss the nonholonomic process and the concept of Berry phase together with its geometric aspect.
-
-\section{Berry Phase and Berry Curvature}
-A system such as the Foucault Pendulum, which does not return to its original state when transported around a closed loop, is said to be $\mathbf{nonholonomic}$. The word "transport" here does not require any physical motion, what we bear in mind is that the parameters of the system are changed in a particular means that eventually returns them to their initial values. Let's move on to the quantum mechanics of nonholonomic adiabatic processes, and confine our discussion within the non-degenerate Hamiltonian to avoid complexity. According to the first adiabatic theorem, we have:\begin{equation}
-    \Psi_n(t)=\psi_n(t)e^{i[\theta_n(t)+\gamma_n(t)]}
+What happens if the denominator approaches zero, namely $k=-\frac{n\pi}{a}(1-\delta)$? Evidently, the result diverges and becomes meaningless. It helps to prove that when $k$ is the multiple of $-\frac{\pi}{a}$, the perturbation theory is not applicable. The reason why this divergence take place can be ascribed to another state $k'=\frac{n\pi}{a}(1+\delta)$. State $k$ has a non-zero matrix element with state $k'=\frac{n\pi}{a}(1+\delta)$ while their energy are almost identical. So in a nutshell, to deal with this divergence, we need to utilize the degenerate time-independent perturbation theory. Recalling what we've learnt, we first write the wave function in the linear combination of two wave functions $\psi_{k'}^0$ and $\psi_k^0$\begin{equation}
+    \psi=\alpha\psi_{k'}^0+\beta\psi_k^0
 \end{equation}
-where $\theta_n(t)$ is the dynamical phase and $\gamma_n(t)$ is the so-called geometric phase. We find that $\psi_n(t)$ depends on $t$ since there is some parameter $\mathbf{R}(t)$ (vector form) in the Hamiltonian that is changing with time. Thus\begin{equation}
-    \frac{d}{dt'}\psi_n(t')=\sum_i\frac{\partial{\psi_n}}{\partial{R_i}}\frac{dR_i}{dt'}=(\nabla_R\psi_n)\cdot\frac{d\mathbf{R}}{dt'}
-\end{equation}
-where $\nabla_R$ is the gradient with respect to these parameters. Putting this into the expression of geometric phase, we obtained:\begin{equation}
-    \gamma_n(t)=i\int_{\mathbf{R}_i}^{\mathbf{R}_f}\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{R}}
-\end{equation}
-If the Hamiltonian returns to its original form after a time $T$, the net geometric phase change is:\begin{equation}
-    \gamma_n(T)=i\oint\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{R}}
-\end{equation}
-This is a line integral along a closed loop in parameter-space, and generally speaking, it is not zero. Equation (29) was first derived by Micheal Berry in 1984 and $\gamma_n(T)$ is therefore named after him, called $\mathbf{Berry~Phase}$. Notice that Berry phase depends only on the path taken, not on how fast that path is traversed (yet slow enough to validate the adiabatic hypothesis). By contrast, the accumulated dynamical phase $\theta_n(T)$ depends critically on the elapsed time.\\
-\\
-Like electromagnetic field, we define a vector function called $\mathbf{Berry~Connection}$ or $\mathbf{Berry~Vector~Potential}$:\begin{equation}
-    \mathcal{A}_n(\mathbf{R})=i\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}
-\end{equation}
-It's trivial that Berry vector potential is pure real. Using this expression, we can rewrite Berry phase as:\begin{equation}
-    \gamma_n(C)=-\Im\int_C\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{R}}=\int_C\mathcal{A}_n(\mathbf{R})\cdot{d\mathbf{R}}
-\end{equation}
-Before discussing the gauge invariance, let's take a glimpse at the observation of Berry phase. We're accustomed to thinking that the phase factor cancels out when calculating physical quantities involving $|\Psi|^2$. But same thing doesn't apply for the geometric phase. For instance, if we take a beam of particles (all in the state $\psi_0$), and split it into two so that one beam passes through an adiabatically changing potential while the other doesn't. When the two beams are recombined, the total wave function has the form:\begin{equation}
-    \psi=\frac12\psi_0+\frac12\psi_0e^{i\theta}
-\end{equation}
-where $\theta$ is the extra phase (in part dynamical, and in part geometric). In this case, we have:\begin{equation}
-    |\psi|^2=\frac12|\psi_0|^2(1+\cos{\theta})=|\psi_0|^2\cos^2(\frac{\theta}{2})
-\end{equation}
-We found out that this actually characterizes quantum interference. So by looking for points of constructive and destructive interference, one can easily measure $\theta$, which makes the observation of Berry phase possible.\\
-\\
-To talk about the gauge properties of Berry phase, we need to define a gauge transformation first:\begin{equation}
-    \ket{\psi_n(\mathbf{R})}\rightarrow\ket{\psi'_n(\mathbf{R})}={e^{i\zeta(\mathbf{R})}\ket{\psi_n(\mathbf{R})}}
-\end{equation}
-With a little calculation, we obtained the transformed Berry connection:\begin{equation}
-    \mathcal{A}_n(\mathbf{R})\rightarrow{\vec{\mathcal{A}}'_n(\mathbf{R})}=i\braket{\psi'_n(\mathbf{R})|\nabla_R\psi'_n(\mathbf{R})}=\mathcal{A}_n(\mathbf{R})-\nabla_R\zeta(\mathbf{R})
-\end{equation}
-and the transformed Berry phase:\begin{equation}
-    \gamma_n\rightarrow{\gamma'_n}=\gamma_n+\zeta(\mathbf{R}(0))-\zeta(\mathbf{R}(T))
-\end{equation}
-We're therefore convinced that Berry connection and Berry phase are both gauge-dependent. Before Berry, many people had concluded that, by a thoughtful choice of the gauge factor $\zeta(\mathbf{R})$, Berry phase can be cancelled and hence, is not of much significance. To falsify this statement, we can consider a closed path C in parameter-space for which, after a long time $T$, we return to the original parameters. For such a path, the fact that we chose our eigenstates to be single-valued means that when we return to the original parameter configuration, the basis state must be the same and gauge transformations must maintain this property, namely\begin{equation}
-    \zeta(\mathbf{R}(t))-\zeta(\mathbf{R}(0))=2k\pi
-\end{equation}
-where $k$ is an integer. We can find that unless being an integer itself, the Berry phase cannot be cancelled simply by choosing the gauge factor wisely.\\
-\\
-In the remainder of this material, we will confine our discussion within closed paths and consider the parameter-space to be three-dimensional, which is good enough in condensed matter physics. According to equation (36), for a closed path, the Berry phase is obviously a $\mathbf{gauge-invariant}$ quantity. Application of Stokes theorem gives:\begin{equation}
-    \gamma_n=-\Im{\int(\nabla\times\braket{\psi_n(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})})}\cdot{d\mathbf{S}}=-\Im\int\bra{\nabla_R\psi_n(\mathbf{R})}\times\ket{\nabla_R\psi_n(\mathbf{R})}\cdot{d\mathbf{S}}
-\end{equation}
-This equation is called the $\mathbf{Berry's~formula}$. It is quite reminiscent of the expression for magnetic flux in terms of vector potential $\vec{\mathbf{A}}$, thus, Berry phase can be thought of as the “flux" through the close loop trajectory in parameter-space. Moreover, by analogy with differential geometry, we can also define a specific kind of curvature here. Start from Berry phase, we have:\begin{equation}
-    \gamma_n=\oint_C\mathcal{A}_{\mu}dx^{\mu}=\int_S\partial_{\nu}\mathcal{A}_{\mu}dx^{\mu}\wedge{dx^{\nu}}=\int_S\frac12(\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu})dx^{\mu}\wedge{dx^{\nu}}
-\end{equation} 
-We define tensor\begin{equation}
-    \Omega_{\mu\nu}=\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu}
-\end{equation}
-to be $\mathbf{Berry~curvature}$. In this way, we can rewrite the Berry phase as follows:\begin{equation}
-    \gamma_n=\int_S{\frac12\Omega_{\mu\nu}dx^{\mu}\wedge{dx^{\nu}}}
-\end{equation}
-Suppose the corresponding vector $\vec{\mathbf{\Omega}}(\mathbf{R})$ of Berry curvature is the curl of Berry connection, that is to say\begin{equation}
-    \gamma_n=\int_S\vec{\mathbf{\Omega}}(\mathbf{R})\cdot{d\mathbf{S}}=\int_S\Omega_{\rho}dS^{\rho}
-\end{equation}
-Then we could easily derive the relation between Berry curvature and the corresponding vector using the Levi-Civita symbol:\begin{equation}
-    \Omega^\rho=\frac12\Omega_{\mu\nu}\epsilon^{\mu\nu\rho}
+Notice their energy are very close but not exactly the same, which is slightly deviated from the general degenerate perturbation theory. According to the spirit of degenerate perturbation theory, we expect two distinct linear combinations give different energy correction under the perturbation $V(x)-\bar{V}$. Let $W_{ij}=\bra{\psi_i^0}\Delta{V}\ket{\psi_j^0}$, we obtained two equations after little calculations\begin{equation}
+    \alpha{W}_{k'k'}+\beta{W}_{k'k}=\beta{V}_n=\alpha(E-E_{k'}^0) 
 \end{equation}\begin{equation}
-    \Omega_{\mu\nu}=2\Omega^\rho\epsilon_{\mu\nu\rho}
+    \alpha{W}_{kk'}+\beta{W}_{kk}=\alpha{V}_n^*=\beta(E-E_k^0)
 \end{equation}
-Before continuing the discussion of non-Abelian Berry curvature, I want to mention a gauge-independent computational method of Berry phase and simultaneously verify the $\mathrm{U(1)}$ gauge invariance of Berry curvature. Since the spectrum of Hamiltonian is non-degenerate, we insert the identity operator into $\Omega^k$:\begin{equation}
-    \Omega^k=-\Im[(\braket{\nabla_i\psi_n(\mathbf{R})|\psi_n(\mathbf{R})}\braket{\psi_n(\mathbf{R})|\nabla_j\psi_n(\mathbf{R})}+\sum_{m\neq{n}}\braket{\nabla_i\psi_n(\mathbf{R})|\psi_m(\mathbf{R})}\braket{\psi_m(\mathbf{R})|\nabla_j\psi_n(\mathbf{R})})\epsilon^{ijk}]
-\end{equation}
-The first term can be dropped since it's pure real and makes no contribution to $\Omega^k$. Hence, we have\begin{equation}
-    \gamma_n=-\Im\sum_{m\neq{n}}\int_S\braket{\nabla_i\psi_n(\mathbf{R})|\psi_m(\mathbf{R})}\braket{\psi_m(\mathbf{R})|\nabla_j\psi_n(\mathbf{R})}\epsilon^{ijk}dS_k
-\end{equation}
-Another equivalent expression of equation (9) can be written as:\begin{equation}
-    \bra{\psi_m(\mathbf{R})}(\nabla_RH)\ket{\psi_n(\mathbf{R})}=(E_n-E_m)\braket{\psi_m(\mathbf{R})|\nabla_R\psi_n(\mathbf{R})}
-\end{equation}
-Substitute equation (47) into equation (46), we have\begin{equation}
-    \gamma_n=-\Im\int_S\sum_{m\neq{n}}\frac{\bra{\psi_n(\mathbf{R})}(\nabla_RH)\ket{\psi_m(\mathbf{R})}\times\bra{\psi_m(\mathbf{R})}(\nabla_RH)\ket{\psi_n(\mathbf{R})}}{(E_m(\mathbf{R})-E_n(\mathbf{R}))^2}\cdot{d\mathbf{S}}
-\end{equation} 
-Equation (48) is manifestly gauge independent. It has the advantage over other gauge-independent formulas such as the Berry curvature since it can be evaluated under any gauge choice as the derivatives have been moved to the Hamiltonian. If we sum over the Berry phase of all energy levels, we get 0, showing that the sum of all filled bands can have only zero Berry phase. Up to now we've verified the $\mathrm{U(1)}$ gauge invariance of Berry curvature, now let's move on to the non-Abelian Berry curvature.\\
-\\
-The core problem which must be settled is how can we maintain the gauge invariance even if the Berry connection becomes non-Abelian. It is known to us all that the electromagnetic field defined by electromagnetic potential is a typical gauge field, and so is the field defined by Berry connection. For electromagnetic field, it has the $\mathrm{U(1)}$ gauge invariance in Lagrangian density to maintain physical invariance. In particular, if we apply a gauge transformation on quantum states\begin{equation}
-    \ket{\psi_n}\rightarrow\ket{\psi'_n}={e^{i\zeta(x^\mu)}\ket{\psi_n}}
-\end{equation}
-The electromagnetic potential must also vary to ensure an unchanged Lagrangian density\begin{equation}
-    \mathcal{L}=-\frac14F_{\mu\nu}F^{\mu\nu}+\bar{\psi}(i\gamma^\mu{D_\mu}-m)\psi
-\end{equation}
-where $D_\mu$ symbolizes the co-variant derivative:\begin{equation}
-    D_\mu=\partial_\mu+iA_\mu
-\end{equation}
-with little calculation, we can find out how the electromagnetic potential varies:\begin{equation}
-    A_\mu\rightarrow{A'_\mu}=A_\mu-\partial_\mu\zeta(x^\mu)
-\end{equation}
-which is almost identical with Berry connection. I'm fully convinced that it's a hint that the analogy we made is quite reasonable. Now that we've already proved the Berry connection and electromagnetic potential both to have the $\mathrm{U(1)}$ gauge invariance. Thus, the Berry curvature in non-Abelian scenario must also be gauge invariant, but only in higher level, namely $\mathrm{SU(N)}$, where N is the order of matrix $\mathcal{A}_{mn}(t)$ and also the degeneracy of energy level $m$. It's complicated to construct this gauge-invariant quantity so I'll just affirm that the operator $-i[D_\mu,D_\nu]$ is gauge-invariant. In fact, we have\begin{equation}
-    D_\mu{D_\nu}=(\partial_\mu+i\mathcal{A}_\mu)(\partial_\nu+i\mathcal{A}_\nu)=\partial_\mu\partial_\nu+i\mathcal{A}_\mu\partial_\nu+i\mathcal{A}_\nu\partial_\mu+i(\partial_\mu{\mathcal{A}_\nu})-\mathcal{A}_\mu{\mathcal{A}_\nu}
-\end{equation}\begin{equation}
-    D_\nu{D_\mu}=(\partial_\nu+i\mathcal{A}_\nu)(\partial_\mu+i\mathcal{A}_\mu)=\partial_\nu\partial_\mu+i\mathcal{A}_\nu\partial_\mu+i\mathcal{A}_\mu\partial_\nu+i(\partial_\nu{\mathcal{A}_\mu})-\mathcal{A}_\nu{\mathcal{A}_\mu}
-\end{equation}
-Thus, the operator $-i[D_\mu,D_\nu]$ has the neat form:\begin{equation}
-    -i[D_\mu,D_\nu]=\partial_\mu{\mathcal{A}_\nu}-\partial_\nu{\mathcal{A}_\mu}+i[\mathcal{A}_\mu,\mathcal{A}_\nu]
-\end{equation}
-We notice that if the Berry connection is Abelian, the last term vanishes and everything just simply breaks down to the previous form $\Omega_{\mu\nu}=\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu}$. So we can naturally define the Berry curvature for non-Abelian scenario as:\begin{equation}
-    \Omega_{\mu\nu}=\partial_{\nu}\mathcal{A}_{\mu}-\partial_{\mu}\mathcal{A}_{\nu}+i[\mathcal{A}_\mu,\mathcal{A}_\nu]
-\end{equation}
-For non-Abelian Berry connection, the corresponding vector is identically defined as previous one. Up to now, we have spent two sections doing the theoretical framework, now let's move on to its applications, which cover a wide range of novel topics in condensed matter physics.
-\section{Aharonov-Bohm Effect}
-In classical electrodynamics the potentials (both scalar and vector) are not directly measurable. Instead, the physical quantities are the electric and magnetic fields:\begin{equation}
-    \mathbf{E}=-\nabla{\varphi}-\frac{\partial{\mathbf{A}}}{\partial{t}},~~~\mathbf{B}=\nabla\times\mathbf{A}
-\end{equation}
-As is known to us all, gauge transformation has no effect on the fields. In non-relativistic quantum mechanics, the potentials play a more significant role, for the Hamiltonian is expressed as:\begin{equation}
-    \hat{H}=\frac1{2m}(-i\hbar\nabla-\frac{e}{c}\mathbf{A})^2+e\varphi
-\end{equation}
-Nevertheless, the theory remains gauge-invariant, and for a long time it was taken for granted that there would be no electromagnetic influences in regions where $\mathbf{E}$ and $\mathbf{B}$ are zero. But in 1959, Aharonov and Bohm showed that the vector potential can affect the quantum behavior of a charged particle even when it's moving through a region where the field itself is zero. We're going to discuss this charming effect and indicate how it all relates to Berry phase. Let's begin with the time-dependent Schr\"odinger equation with the presence of electromagnetic field:\begin{equation}
-    [\frac1{2m}(-i\hbar\nabla-\frac{e}{c}\mathbf{A})^2+V]\psi=i\hbar\frac{\partial\psi}{\partial{t}}
-\end{equation}
-where the potential energy $V$ may or may not include an electrical contribution $e\varphi$. This slightly complicated expression can be simplified by introducing a transformation:\begin{equation}
-    \psi=e^{ig}\psi'
-\end{equation}
-where\begin{equation}
-    g(\mathbf{r})=\frac{e}{c\hbar}\int_{\mathcal{O}}^{\mathbf{r}}\mathbf{A}(\mathbf{r}')\cdot{d\mathbf{r}'}
-\end{equation}
-and $\mathcal{O}$ is an arbitrarily chosen reference point. Note this definition makes sense only when the curl of $\mathbf{A}$ vanishes throughout the region. After some calculation, we derived:\begin{equation}
-    (-i\hbar\nabla-\frac{e}{c}\mathbf{A})^2(e^{ig}\psi')=-\hbar^2e^{ig}\nabla^2\psi
-\end{equation}
-Substituting equation (62) into (59), and cancelling the common factor, we are left with:\begin{equation}
-    (-\frac{\hbar^2}{2m}\nabla^2+V)\psi'=i\hbar\frac{\partial\psi'}{\partial{t}}
-\end{equation}
-Evidently, $\psi'$ satisfies the Schr\"odinger equation without $\mathbf{A}$. If we have solved equation (63), correcting for the presence of a curl-free vector potential will be trivial: Just attach a phase factor $e^{ig}$ to the solution. Aharonov and Bohm proposed an experiment in which a beam of electrons is split in two, and passed either side of a long solenoid before being recombined. They were kept away from the solenoid an therefore encounter only regions where the magnetic field $\mathbf{B}$ is 0. But according to our statement, the non-zero vector potential $\mathbf{A}$ makes these two beams recombine with completely distinct phases:\begin{equation}
-    g=\frac{e}{c\hbar}\int\mathbf{A}\cdot{d\mathbf{r}}=\pm\frac{e\Phi}{2c\pi\hbar}\int_0^\pi{d\phi}=\pm\frac{e\Phi}{2c\hbar}
-\end{equation}
-The plus sign applies to the electrons traveling in the same direction as the current in the solenoid and vice versa. Consequently, the beams arrive out of a phase by an amount proportional to the magnetic flux their paths encircle:\begin{equation}
-    \gamma=\frac{e\Phi}{c\hbar}
-\end{equation}
-As Berry pointed out in his first paper on the subject, the A-B effect can be regarded as an example of geometric phase. Suppose the charged particle is confined to a box (which is centered at point $\mathbf{R}$ outside the solenoid) by a potential $V(\mathbf{r}-\mathbf{R})$. The eigenfunctions of the Hamiltonian are determined by\begin{equation}
-    [\frac1{2m}(-i\hbar\nabla-\frac{e}{c}\mathbf{A}(\mathbf{r}))^2+V(\mathbf{r}-\mathbf{R})]\psi_n=E_n\psi_n
-\end{equation}
-Applying the same method as previous, let $\psi_n=e^{ig}\psi'_n$, where\begin{equation}
-    g=\frac{e}{c\hbar}\int_{\mathbf{R}}^{\mathbf{r}}\mathbf{A}(\mathbf{r}')\cdot{d\mathbf{r}'}
-\end{equation}
-In this way, $\psi'_n$ satisfies the following equation:\begin{equation}
-    [-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r}-\mathbf{R})]\psi'_n=E_n\psi'_n
-\end{equation}
-Notice that unlike $\psi_n$, $\psi'_n$ is a function only of the displacement $(\mathbf{r}-\mathbf{R})$. Now let's carry the box around the solenoid. To determine the Berry phase we must first evaluate the quantity $\braket{\psi_n|\nabla_R\psi_n}$ since the varying parameter of Hamiltonian is precisely $\mathbf{R}$. In fact, we have:\begin{equation}
-    \nabla_R\psi_n=\nabla_R[e^{ig}\psi'_n(\mathbf{r}-\mathbf{R})]=-\frac{ie}{c\hbar}\mathbf{A}(\mathbf{R})e^{ig}\psi'_n(\mathbf{r}-\mathbf{R})+e^{ig}\nabla_R\psi'_n(\mathbf{r}-\mathbf{R})
-\end{equation}
-Thus\begin{equation}
-    \braket{\psi_n|\nabla_R\psi_n}=-\frac{ie}{c\hbar}\mathbf{A}(\mathbf{R})-\int[\psi'_n(\mathbf{r}-\mathbf{R})]^*\nabla\psi'_n(\mathbf{r}-\mathbf{R})d^3\mathbf{r}
-\end{equation}
-Please be aware that the $\nabla$ with no subscript denotes the gradient with respect to $\mathbf{r}$, and I used to fact that $\nabla_R=-\nabla$ when acting on a function of $(\mathbf{r}-\mathbf{R})$. It's also evident that the last integral is proportional to the expectation value of momentum, which is zero in an eigenstate of the Hamiltonian. In a nutshell, we obtained:\begin{equation}
-    \braket{\psi_n|\nabla_R\psi_n}=-\frac{ie}{c\hbar}\mathbf{A}(\mathbf{R})
-\end{equation}
-Putting this into equation (31), we conclude that\begin{equation}
-    \gamma_n(C)=\frac{e}{c\hbar}\oint\mathbf{A}(\mathbf{R})\cdot{d\mathbf{R}}=\frac{e\Phi}{c\hbar}
-\end{equation}
-which neatly confirms equation (65), and reveals that the Aharonov-Bohm effect is a particular instance of geometric phase.
-\section{Degeneracies and Level Crossing}
-Another important applications of the Berry phase is the classification of degeneracies. This will be one of the main ingredients of band crossings in topological band theory. if the denominator of equation (48) is close to zero, we now show that this level degeneracy point corresponds to a monopole in the parameter-space. Because the denominator of equation (48) is made of two-level terms, the generic degeneracy point is at the intersection of two levels as we vary $\mathbf{R}$. For this reason, two-level systems will appear repeatedly in the research of quantum topological materials.\\
-\\
-Consider two states $\ket{\psi_\pm}$, of energies $E_+(\mathbf{R})\geq{E_-(\mathbf{R})}$ with a degeneracy $E_+(\mathbf{R^*})=E_-(\mathbf{R^*})$. For $\mathbf{R}$ close to the degeneracy point, the Hamiltonian can be expanded in $\mathbf{R}-\mathbf{R^*}$ as\begin{equation}
-    H(\mathbf{R})\approx{H(\mathbf{R^*})}+(\mathbf{R}-\mathbf{R^*})\cdot\nabla{H(\mathbf{R^*})}
-\end{equation}
-Thereby giving the following for the corresponding vector of the Berry curvature:\begin{equation}
-    \mathbf{\Omega}_+(\mathbf{R})=-\Im\frac{\bra{\psi_+(\mathbf{R})}(\nabla{H(\mathbf{R^*})})\ket{\psi_-(\mathbf{R})}\times\bra{\psi_-(\mathbf{R})}(\nabla{H(\mathbf{R^*})})\ket{\psi_+(\mathbf{R})}}{(E_+(\mathbf{R})-E_-(\mathbf{R}))^2}
-\end{equation}
-Meanwhile, the generic form of the Hamiltonian of any two level system is\begin{equation}
-    \hat{H}=\epsilon(\mathbf{R})I_{2\times2}+\mathbf{d}(\mathbf{R})\cdot\mathbf{\sigma}
-\end{equation}
-where $\sigma^i$ are the Pauli matrices and $\mathbf{d}\mathbf{R}$ is a three-dimensional vector that depends on the coordinates $\mathbf{R}$. This Hamiltonian describes many interesting systems in condensed matter physics such as graphene, spin-orbit-coupled systems, a spin-1/2 electron in a magnetic field and many others. Notice that the constant term $\epsilon(\mathbf{R})$ is just an additive term, which can be neglected because it does not modify the eigenstates and also cancels in the subtraction of level energies. Let us now determine the Berry phase upon varying the parameters $\mathbf{R}$ by equation (48) and look into its physical intrinsic properties. We can take $\mathbf{d}(\mathbf{R})=\mathbf{R}$, and the Hamiltonian will take the form (in spherical coordinates)\begin{equation}
-    \hat{H}=x\hat{\sigma}_x+y\hat{\sigma}_y+z\hat{\sigma}_z=R
+where $E$ is the energy with first order correction. Rewrite these two equations in matrix form, we have\begin{equation}
     \begin{bmatrix}
-    \cos\theta & \sin\theta{e^{-i\phi}} \\
-    \sin\theta{e^{i\phi}} & -\cos\theta
+    E_{k'}^0 & V_n \\
+    V_n^* & E_k^0
+    \end{bmatrix}
+    \begin{bmatrix}
+    \alpha \\
+    \beta
+    \end{bmatrix}=E
+    \begin{bmatrix}
+    \alpha \\
+    \beta
     \end{bmatrix}
 \end{equation}
-The eigenstates and corresponding eigenvalues are as follows (in spin space):\begin{equation}
-    \hat{H}\ket{\psi_+}=\hat{H}(\cos{\frac{\theta}2}\ket{\uparrow}+\sin{\frac{\theta}2e^{i\phi}}\ket{\downarrow})=R\ket{\psi_+}
+Solving $E$ as the eigenvalues of the matrix, we derived\begin{equation}
+    E_\pm=\frac12(E_k^0+E_{k'}^0\pm\sqrt{(E_k^0-E_{k'}^0)^2+4|V_n|^2})
+\end{equation}
+Now let's discuss two distinct scenario. The first one is $|E_k^0-E_{k'}^0|\gg|V_n|$, which implies $k$ is slightly far from $-\frac{n\pi}{a}$. We can expand the energies in terms of $\frac{|V_n|}{E_{k'}^0-E_k^0}$ and merely take the first order approximation\begin{equation}
+    E_+=E_{k'}^0+\frac{|V_n|^2}{E_{k'}^0-E_k^0}
 \end{equation}\begin{equation}
-    \hat{H}\ket{\psi_-}=\hat{H}(\sin{\frac{\theta}2e^{-i\phi}}\ket{\uparrow}-\cos{\frac{\theta}2}\ket{\downarrow})=-R\ket{\psi_-}
+    E_-=E_k^0-\frac{|V_n|^2}{E_{k'}^0-E_k^0}
 \end{equation}
-It is evident that the degeneracy is an isolated point at which all three coordinates $(x, y, z)$ vanish. We also have $\nabla{H}=\mathbf{\sigma}$. Put all these into equation (74), we have\begin{equation}
-    \mathbf{\Omega}_+(\mathbf{R})=-\Im\frac{2i(\sin\theta\cos\phi\vec{i}+\sin\theta\sin\phi\vec{j}+\cos\theta\vec{k})}{4R^2}=-\frac{\mathbf{R}}{2R^3}
+Here, we assumed that $\delta$ positively approaches zero, which means $E_{k'}^0>E_k^0$. Notice that these results are the simplified version of the second order correction we mentioned above. We neglected all the other terms except for $k'$, which means only the interactions of these two energy levels are emphasized. This is also the general case in quantum mechanics, or more precisely, perturbation theory where the two interacting energy levels “repel" each other, resulting in the escalation of the higher level and the decline of the lower level. The second scenario is $|E_k^0-E_{k'}^0|\ll|V_n|$, which implies $k$ is very close to $-\frac{n\pi}{a}$. We can expand the energies in terms of $\frac{E_{k'}^0-E_k^0}{|V_n|}$ and merely take the first order approximation\begin{equation}
+    E_\pm=\frac12[E_k^0+E_{k'}^0\pm(2|V_n|+\frac{(E_{k'}^0-E_k^0)^2}{4|V_n|})]
 \end{equation}
-which is absolutely equivalent to a monopole of strength -1/2 located at the origin of the degeneracy. This corresponding vector gives the Berry phase generated merely from varying parameter $\mathbf{R}$:\begin{equation}
-    \gamma_+(C)=-\int_C\frac{\vec{e}_r}{2R^2}\cdot{d\mathbf{S}}=-\frac12\Omega(C)
+Taking $k=-\frac{n\pi}{a}(1-\delta)$ and $k'=\frac{n\pi}{a}(1+\delta)$ into consideration, we have\begin{equation}
+    E_{k'}^0=\bar{V}+\frac{\hbar^2}{2m}(\frac{n\pi}{a})^2(1+\delta)^2=\bar{V}+T_n(1+\delta)^2
+\end{equation}\begin{equation}
+    E_k^0=\bar{V}+\frac{\hbar^2}{2m}(\frac{n\pi}{a})^2(1-\delta)^2=\bar{V}+T_n(1-\delta)^2
 \end{equation}
-where $\Omega(C)$ is the solid angle that $C$ subtends at the degeneracy point.\\
+where $T_n$ represents the kinetic energy when $k=\frac{n\pi}{a}$. Substituting equation (33) and (34) into equation (32), we obtained\begin{equation}
+    E_+=\bar{V}+T_n+|V_n|+\delta^2T_n(\frac{2T_n}{|V_n|}+1)
+\end{equation}\begin{equation}
+    E_-=\bar{V}+T_n-|V_n|-\delta^2T_n(\frac{2T_n}{|V_n|}-1)
+\end{equation}
+These two equation indicate that when $\delta\rightarrow{0}$, $E_\pm$ approach $\bar{V}+T_n\pm|V_n|$ in a pattern of parabola. When $\delta$ approaches zero negatively, the case is exactly the same, which results in a y-axis symmetric relation between energy $E(k)$ and $k$. In the zeroth order correction, electrons are regarded as free particles. In this case, the energy $E(k)$, which is the function of wave vector $k$, is quadratic. The periodically fluctuating potential $V$ leads to the interactions between state $k$ and state $k+\frac{2n\pi}{a}$. In the nearly free electron model, when $k$ is not proximate to $\frac{n\pi}{a}$, the non-degenerate perturbation theory is validated but the energy correction is relatively small and therefore negligible. For $k$ proximate to $\frac{n\pi}{a}$, energy correction caused by other state is also negligible compared to the state $-\frac{n\pi}{a}$, and this is the case of degenerate perturbation theory. In a word, the interaction is the origin of energy gaps. Quantitatively speaking, the width of the energy gap located at $k=\pm\frac{n\pi}{a}$ is $2|V_n|$.\\
 \\
-We will now illustrate the preceding derivation with the case of a Dirac-Weyl fermion. These fermions have a Hamiltonian which in three-space dimensions reads $k_i\sigma_i$, where $k$ is Brillouin zone momentum. We ask what happens to the wavefunction of a Dirac fermion as it is transported around a path $C$ in the momentum space. It will acquire a phase, the Berry phase. We now assume that the path $C$ is confined to the $xy$-plane. In this case, the solid angle subtended by the curve in closed space is $2\pi$ if the curve encircles the degeneracy and zero if it does not, with the Berry phase being $\pm1$ in the two cases, respectively. Also notice that the choice of contour is arbitrary as long as it is closed.
+The separate regions of momentum $k$ are called the energy bands. The first band, for example, corresponds to the region $-\frac{\pi}{a}<k<\frac{\pi}{a}$. The nth energy band is related to the interval $-\frac{n\pi}{a}<k<-\frac{(n-1)\pi}{a},~\frac{(n-1)\pi}{a}<k<\frac{n\pi}{a}$. According to equation (15), if the spin of the electrons are considered, then each band accommodates $2N$ states, where $N$ is the number of primitive cell.\\
+\\
+We also need to emphasize that only when the free particle as the zeroth approximation is validated can we introduce wave vector $k$ to characterize the state of the electron and the Bloch function (like equation 23) as the wave function. Now we want to explain the relation between the reduced wave vector $\bar{k}$ and the wave vector $k$ of the electron. For one-dimensional lattice, the first Brillouin Zone is $-\frac{\pi}{a}<k<\frac{\pi}{a}$. This enlightens us to decompose $k$ as\begin{equation}
+    k=\frac{2\pi{m}}{a}+\bar{k}
+\end{equation} 
+The form of equation (23) can be written as $e^{ikx}f(x)$, where $f(x)$ is periodic. If we apply equation (37) to it, we have\begin{equation}
+    e^{ikx}f(x)=e^{i\bar{k}x}(e^{i\frac{2\pi{m}}{a}x}f(x))
+\end{equation}
+Notice the function in the parenthesis on the right hand side of equation (38) is also periodic, and therefore corresponding to the factor $u(x)$ in equation (5). In this way, we transformed all the states into the first Brillouin Zone, considering all electrons as those ones in the first Brillouin Zone, simultaneously forming a representation of the relation between $E(k)$ and $k$ using the reduced wave vector. In this new graph, the separations of energy level and energy gaps are relocated at $\bar{k}=0$ and $\bar{k}=\pm\frac{\pi}{a}$. However, when referring to free electron solutions in terms of the reduced wave vector, we must point out not only the $\bar{k}$ but also which energy band it belongs to in case of misunderstanding.
+\section{Nearly Free Electron Approximation in 3D Periodic Field}
+The same method in the second section are also applicable in this section. First, we have the three dimensional wave equation\begin{equation}
+    [-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r})]\psi(\mathbf{r})=E\psi(\mathbf{r})
+\end{equation}
+where $V(\mathbf{r})$ is the periodic potential with $V(\mathbf{r}+\mathbf{R}_n)$ and $\mathbf{R}_n$ is a Bravais lattice vector. We can take the average field $\bar{V}$ to get the zeroth approximation plane wave solution of the free particle\begin{equation}
+    \psi_{\mathbf{k}}^0=\frac{1}{\sqrt{V}}e^{i\mathbf{k}\cdot\mathbf{r}}
+\end{equation}
+with the energy eigenvalue\begin{equation}
+    E_{\mathbf{k}}^0=\bar{V}+\frac{\hbar^2k^2}{2m}
+\end{equation}
+We already assumed that the volume of the crystal is $V$. According to the periodic boundary conditions, the permitted wave vectors are\begin{equation}
+    \mathbf{k}=\frac{l_1}{N_1}\mathbf{b}_1+\frac{l_2}{N_2}\mathbf{b}_2+\frac{l_3}{N_3}\mathbf{b}_3
+\end{equation}
+which symbolized a group of points evenly distributed in the momentum space with a density of $\frac{V}{(2\pi)^3}$. Similar to the one dimensional scenario, the first order correction to the energy is zero. The higher order correction of energy and the first order correction of the wave function both require us to calculate the matrix element\begin{equation}
+    \bra{\mathbf{k}'}V\ket{\mathbf{k}}=\frac{1}{V}\int{e^{-i(\mathbf{k}'-\mathbf{k})\cdot\mathbf{r}}V(\mathbf{r})}d\mathbf{r}
+\end{equation}
+What we're going to do is identical as the one dimensional case. By introducing a partition based on different primitive cell and a new variable $\vec{\xi}=\mathbf{r}-\mathbf{R}_n$, the integral can be expressed as\begin{equation}
+    \bra{\mathbf{k}'}V\ket{\mathbf{k}}=\frac{1}{V}(\int_{\mathrm{cell}}e^{-i(\mathbf{k}'-\mathbf{k})\cdot\vec\xi}V(\vec\xi)d\vec\xi)\cdot\sum_n{e^{-i(\mathbf{k}'-\mathbf{k})\cdot\mathbf{R}_n}}
+\end{equation}
+The vector $\mathbf{k}'$ can be expressed in the same form as $\mathbf{k}$\begin{equation}
+    \mathbf{k}=\frac{l'_1}{N_1}\mathbf{b}_1+\frac{l'_2}{N_2}\mathbf{b}_2+\frac{l'_3}{N_3}\mathbf{b}_3
+\end{equation}
+The Bravais lattice vector takes the form $\mathbf{R}_n=u_1\mathbf{a}_1+u_2\mathbf{a}_2+u_3\mathbf{a}_3$, so the sum in the equation (44) can be written as\begin{equation}
+    \sum_n{e^{-i(\mathbf{k}'-\mathbf{k})\cdot\mathbf{R}_n}}=(\sum_{u_1=0}^{N_1-1}e^{-i\frac{l'_1-l_1}{N_1}u_1})(\sum_{u_2=0}^{N_2-1}e^{-i\frac{l'_2-l_2}{N_2}u_2})(\sum_{u_3=0}^{N_3-1}e^{-i\frac{l'_3-l_3}{N_3}u_3})
+\end{equation}
+Obviously, if and only if\begin{equation}
+    \frac{l'_1-l_1}{N_1}=n_1,~\frac{l'_2-l_2}{N_2}=n_2,~\frac{l'_3-l_3}{N_3}=n_3
+\end{equation}
+the value of the sum is $N_1N_2N_3=N$. Otherwise the result is trivially zero. Since the $n_i$ are integers, the condition can be paraphrased as, the difference between $\mathbf{k}$ and $\mathbf{k'}$ is just a reciprocal lattice vector $\mathbf{G}_n$. In this scenario, the non-zero matrix element is\begin{equation}
+    \bra{\mathbf{k}'}V\ket{\mathbf{k}}=\Omega_c^{-1}\int_{\mathrm{cell}}e^{-i\mathbf{G}_n\cdot\vec\xi}V(\vec\xi)d\vec\xi=V_n
+\end{equation}
+which happens to be exactly the Fourier coefficients of the potential $V(\mathbf{r})$\begin{equation}
+    V(\mathbf{r})=\sum_n{V_n}e^{i\mathbf{G}_n\cdot\mathbf{r}}
+\end{equation}
+The first order correction of wave function is\begin{equation}
+    \psi_k^{(1)}=\frac{1}{\sqrt{V}}e^{i\mathbf{k}\cdot\mathbf{r}}(\sum_{\mathbf{G}_n\neq{\mathbf{0}}}\frac{V_n}{E_\mathbf{k}^0-E_{\mathbf{k}+\mathbf{G}_n}^0}e^{i\mathbf{G}_n\cdot\mathbf{r}})
+\end{equation}
+The part inside the bracket has the lattice periodicity, which corresponds to the Bloch function form. We can tell from this that if\begin{equation}
+    k^2=(\mathbf{k}+\mathbf{G})^2\Rightarrow{\mathbf{G}_n\cdot(\mathbf{k}+\frac12\mathbf{G}_n)}=0
+\end{equation}
+then the non-degenerate perturbation theory is invalid, and we should seek help from the degenerate perturbation theory. Equivalently, if we put the origin of $\mathbf{k}$ and $-\mathbf{G}_n$ together, the termination of $\mathbf{k}$ will surely be on the perpendicular bisector of $-\mathbf{G}_n$, where the energy gaps emerge and different energy bands are segregated. Unlike the one dimensional case, the degeneracy could be multiple, and we must work with all degenerate states when computing the gap. But the same thing is that we can also introduce the reduced wave vector to move all $\mathbf{k}$ into the first Brillouin Zone, and what we need to do is just minus a reciprocal lattice vector $\mathbf{G}_n$ from $\mathbf{k}'$. Except from the first Brillouin Zone, the second, the third and so on are all encircled by perpendicular bisectors of other reciprocal lattice vectors that extend further than that encircling the first Brillouin Zone. There's one thing that is exclusive to higher dimensional energy bands. Take the simple cubic lattice for example whose reciprocal lattice also belongs to simple cubic. On the side of the xy-plane of the square-shaped first Brillouin Zone, the energy gap lets the proximate point in the second Brillouin Zone have a higher energy than that in the first Brillouin Zone. But on one of the vertexes of the square Brillouin Zone, the energy will be higher than that on the side. If this energy difference is considerable enough to surpass even the proximate point in the second Brillouin Zone, then different energy band will overlap. Last very thing we would like to mention is the number of states in the first Brillouin Zone. According to the density of momentum point $\mathbf{k}$ and taking spin into consideration, the number is still $2N$, just as the one dimensional case.
+\section{Pseudo-Potential Approximation}
+In the previous chapters, we assumed the fluctuation of the potential field is small, namely the coefficients $V_n$ in the expansion $V(\mathbf{r})=\sum_n{V_n}e^{i\mathbf{G}_n\cdot\mathbf{r}}$ are small. But that's not true in reality. Around the nucleus, the coulomb interaction results in huge deviation in $V(\mathbf{r})$ from the average value. Consequently, the calculation of the perturbation requires many plane wave with different $\mathbf{k}+\mathbf{G}_n$, thereby making it almost impossible.\\
+\\
+In solids, people care about the valence electrons the most. When atoms forming the solid, great changes happened to the motion states of valence electrons while little happened to inner electrons. In the pseudo-potential approximation, the wave functions of valence electrons remain orthogonal to inner core electrons, which can be equivalently considered as an expelling interaction (or potential). Mathematically, we have pseudo-wavefunction\begin{equation}
+    \ket{\psi_v^{ps}}=\ket{\psi_v}-\sum_c\mu_{cv}\ket{\psi_c}
+\end{equation}
+where the $\ket{\psi_v}$ and $\ket{\psi_c}$ represent the wavefunctions of the valence electrons and the core electrons respectively (and they're orthogonal for sure), which satisfy\begin{equation}
+    \hat{H}\ket{\psi_c}=E_c\ket{\psi_c},~\hat{H}\ket{\psi_v}=E_v\ket{\psi_v}
+\end{equation}Coefficient $\mu_{cv}=-\braket{\psi_c|\psi_v^{ps}}$. Now we have\begin{equation}
+    (\hat{H}-E_v)\ket{\psi_v^{ps}}=(\hat{H}-E_v)(\ket{\psi_v}+\sum_c\braket{\psi_c|\psi_v^{ps}}\ket{\psi_c})
+\end{equation}using equation (53) and further modify the form, we have\begin{equation}
+    (\hat{H}+\sum_c(E_v-E_c)\ket{\psi_c}\bra{\psi_c})\ket{\psi_v^{ps}}=E_v\ket{\psi_v^{ps}}
+\end{equation}Here we can recognize the so-called pseudo-potential\begin{equation}
+    V^{ps}=V+\sum_c(E_v-E_c)\ket{\psi_c}\bra{\psi_c}
+\end{equation}In reality, the pseudo-wavefunction with the wave vector $\mathbf{k}$ is the linear combination of a series of plane waves with different $\mathbf{k}+\mathbf{G}_n$\begin{equation}
+    \psi_{n,\mathbf{k}}(\mathbf{r})=\frac1{\sqrt{V}}\sum_{\mathbf{G}}a_{n,\mathbf{k}}(\mathbf{G})e^{i(\mathbf{G}+\mathbf{k})\cdot\mathbf{r}}
+\end{equation}But in reality, if we are to use the pseudo-potential approximation to calculate the band, we can just make a cutoff and only take the first few plane waves with minimum length of the reciprocal lattice vector. But generally, we can derive the Hamiltonian modified by the pseudo-potential as\begin{equation}
+    \sum_{\mathbf{G}}a_{n,\mathbf{k}}(\mathbf{G})\mathcal{H}_{\mathbf{G}',\mathbf{G}}=\sum_{\mathbf{G}}a_{n,\mathbf{k}}(\mathbf{G})E_{n,\mathbf{k}}\delta_{\mathbf{G}',\mathbf{G}}
+\end{equation}where the matrix element $\mathcal{H}_{\mathbf{G}',\mathbf{G}}$ can be calculated as\begin{equation}
+    \mathcal{H}_{\mathbf{G}',\mathbf{G}}=\frac{1}{V}\int_{\mathrm{all}}e^{-i(\mathbf{G}'+\mathbf{k})\cdot\mathbf{r}}(-\frac{\hbar^2}{2m_0}\nabla^2+V^{ps})e^{i(\mathbf{G}+\mathbf{k})\cdot\mathbf{r}}d^3\mathbf{r}
+\end{equation}Notice the latter term of the integral is just the Fourier transformation of the pseudo-potential, we therefore have\begin{equation}
+   \mathcal{H}_{\mathbf{G}',\mathbf{G}}=\frac{\hbar^2}{2m_0}|\mathbf{G}+\mathbf{k}|^2\delta_{\mathbf{G}',\mathbf{G}}+V^{ps}_{\mathbf{G}',\mathbf{G}}
+\end{equation}If the primitive cell consists of multiple atoms, the pseudo-potential is the summation of every single atom\begin{equation}
+    V^{ps}=\sum_aV^{ps}_a(\mathbf{r}-\mathbf{r}_a)
+\end{equation}\begin{equation}
+    V^{ps}_{\mathbf{G}',\mathbf{G}}=\frac{1}{V}\sum_a{e^{i(\mathbf{G}-\mathbf{G}')\cdot\mathbf{r}_a}}\int_{\mathrm{all}}V_a(\mathbf{r})e^{i(\mathbf{G}-\mathbf{G}')\cdot\mathbf{r}_a}d^3\mathbf{r}
+\end{equation}The expression can be further simplified if the atoms are the same (such as Si and Ge)\begin{equation}
+    V^{ps}_{\mathbf{G}',\mathbf{G}}=\frac{1}{\Omega_c}\sum_{\mathbf{t}}{e^{i(\mathbf{G}-\mathbf{G}')\cdot\mathbf{t}}}\int_{\mathrm{all}}V_a(\mathbf{r})e^{i(\mathbf{G}-\mathbf{G}')\cdot\mathbf{r}_a}d^3\mathbf{r}
+\end{equation}where the vector $\mathbf{t}$ is the relative displacement of different atoms in a single primitive cell. Obviously, for Si and Ge, given the lattice constant $a$, we have $\mathbf{t}=\pm\frac{a}{8}(\vec{i}+\vec{j}+\vec{k})$.\\
+\\
+Actually there are some peculiar features to the pseudo-potential. Equation (56) implies that the way pseudo-potential affect a wave function is not merely to multiply it by some function of $\mathbf{r}$, but to take an inner product instead. Or in other words, the pseudo-potential is nonlocal. Additionally, the pseudo-potential depends on the energy of the level being sought, which means that many of the basic theorems one is used to applying without further thought (such as the orthogonality of the eigenfunctions belonging to different eigenvalues) are no longer applicable to the pseudo-Hamiltonian.
+\section{Tight Binding Approximation}
+The protocol of tight binding approximation is that when an electron is proximate to an atom, it is mainly influenced by this single atom. Taking the interactions caused by other atoms as perturbations, we can build a connection between the atomic energy levels and the band in crystals, and this is called the tight binding approximation.\\
+\\
+If we ignore the interactions between different atoms completely, then electrons around a Bravais lattice vector $\mathbf{R}_n$ (we assume the lattice is simple, which means there's only a single atom in a primitive cell) will be constrained to this atom in the form of a bound state $\varphi_i(\mathbf{r}-\mathbf{R}_n)$, which is the eigenstate of this wave equation\begin{equation}
+    [-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r}-\mathbf{R}_n)]\varphi_i(\mathbf{r}-\mathbf{R}_n)=\varepsilon_i\varphi_i(\mathbf{r}-\mathbf{R}_n)
+\end{equation}
+where $V(\mathbf{r}-\mathbf{R}_n)$ is the atomic potential field at $\mathbf{R}_n$ and $\varepsilon_i$ is an atomic energy level. Notice there can be degeneracy in $\varphi_i(\mathbf{r}-\mathbf{R}_n)$. For example, the p-orbital wave functions are triply degenerated. The wave equation of electrons in crystals is\begin{equation}
+    [-\frac{\hbar^2}{2m}\nabla^2+U(\mathbf{r})]\psi(\mathbf{r})=E\psi(\mathbf{r})
+\end{equation}
+where $U(\mathbf{r})$ is the periodic field induced by all the atoms. In the tight binding approximation, we take equation (64) as the zeroth order correction and $U(\mathbf{r}-V(\mathbf{r}-\mathbf{R}_n))$ as perturbations. Due to the periodicity of the potential, the bound state for another atom is still an eigenstate of the wave equation (64)\begin{equation}
+    [-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r}-\mathbf{R}_n)]\varphi_i(\mathbf{r}-\mathbf{R}_m)=\varepsilon_i\varphi_i(\mathbf{r}-\mathbf{R}_m)
+\end{equation}
+So now we have $N$ degenerate wave functions, sharing the same energy $\varepsilon_i$ and each corresponding to a Bravais Lattice vector (actually $2N$ if you take spin into consideration). Now the degenerate perturbation theory takes over. We first write down the linear combination of these wave functions\begin{equation}
+    \psi_i(\mathbf{r})=\sum_n{a_n}\varphi_i(\mathbf{r}-\mathbf{R}_n)
+\end{equation}
+Substituting equation (67) into (65) and consider the equation (66), we have\begin{equation}
+    \sum_n{a_n}[U(\mathbf{r})-V(\mathbf{r}-\mathbf{R}_n)]\varphi_i(\mathbf{r}-\mathbf{R}_n)=(E-\varepsilon_i)\sum_n{a_n}\varphi_i(\mathbf{r}-\mathbf{R}_n)
+\end{equation}
+When the space between atoms is larger than the atom radius, the wave functions of different lattice have little overlap and we can therefore take\begin{equation}
+    \int\varphi_i^*(\mathbf{r}-\mathbf{R}_m)\varphi_i(\mathbf{r}-\mathbf{R}_n)d\mathbf{r}=\delta_{mn}
+\end{equation}
+as a fairly reasonable approximation. We take the inner product based on equation (68), and obtained\begin{equation}
+    \sum_n{a_n}\int\varphi_i^*(\mathbf{r}-\mathbf{R}_m)[U(\mathbf{r})-V(\mathbf{r}-\mathbf{R}_n)]\varphi_i(\mathbf{r}-\mathbf{R}_n)d\mathbf{r}=(E-\varepsilon_i)a_m
+\end{equation}
+This actually symbolizes a matrix equation when $n$ iterates over all the indexes. If we consider a variable change $\vec\xi=\mathbf{r}-\mathbf{R}_n$ and use the periodicity of $U(\mathbf{r})$, we can express the integral in equation (70) as\begin{equation}
+    \int\varphi_i^*[\vec\xi-(\mathbf{R}_m-\mathbf{R}_n)][U(\vec\xi)-V(\vec\xi)]\varphi_i(\vec\xi)d\vec\xi=-J(\mathbf{R}_m-\mathbf{R}_n)
+\end{equation}
+Equation (71) demonstrates that the value of the integral is only dependent on the relative position vector $\mathbf{R}_m-\mathbf{R}_n$. Now equation (70) will turn into\begin{equation}
+    -\sum_n{a_n}J(\mathbf{R}_m-\mathbf{R}_n)=(E-\varepsilon_i)a_m
+\end{equation}
+Now let's go back to equation (67), this expression characterizes the motion of an electron in the periodic field, so it definitely obeys the Bloch Theorem. We have\begin{equation}
+    \psi(\mathbf{r}+\mathbf{R}_m)=e^{i\mathbf{k}\cdot\mathbf{R}_m}\sum_n{a_n}\varphi_i(\mathbf{r}-\mathbf{R}_n)=\sum_n{a_n}\varphi_i[\mathbf{r}-(\mathbf{R}_n-\mathbf{R}_m)]
+\end{equation}
+It's also natural that $\int|\psi|^2d\mathbf{r}=1$, so we can suppose the coefficients satisfy\begin{equation}
+    a_n=\frac{1}{\sqrt{N}}e^{i\mathbf{k}\cdot\mathbf{R}_n}
+\end{equation}
+So the wave function can be rewritten in the Bloch function form as\begin{equation}
+    \psi_{i\mathbf{k}}(\mathbf{r})=\frac{1}{\sqrt{N}}\sum_n{e^{i\mathbf{k}\cdot\mathbf{R}_n}}\varphi_i(\mathbf{r}-\mathbf{R}_n)=\frac{1}{\sqrt{N}}e^{i\mathbf{k}\cdot\mathbf{r}}[\sum_n{e^{-i\mathbf{k}\cdot(\mathbf{r}-\mathbf{R}_n)}}\varphi_i(\mathbf{r}-\mathbf{R}_n)]
+\end{equation}
+If we add a Bravais lattice vector to $\mathbf{r}$, nothing happens since the summation has already iterated over all the Bravais lattice vector. That is to say the sum in the bracket is periodic. Let's take this back to equation (72), we have the energy eigenvalues \begin{equation}
+    E_{i\mathbf{k}}=\varepsilon_i-\sum_n{J(\mathbf{R}_m-\mathbf{R}_n)}e^{i\mathbf{k}\cdot(\mathbf{R}_n-\mathbf{R}_m)}=\varepsilon_i-\sum_s{J(\mathbf{R}_s)}e^{-i\mathbf{k}\cdot\mathbf{R}_s}
+\end{equation}
+That is, for a specific $\mathbf{k}$, the wave function and energy eigenvalue are defined by equation (75) and (76) respectively. According to the Bloch Theorem, $\mathbf{k}$ is the reduced wave vector which should be confined with in the first Brillouin Zone. Taking the periodic boundary conditions into consideration, we have $N$ solutions in the form of equation (75) which can be displayed in a decent form\begin{equation}
+    \begin{bmatrix}
+    \psi_{i\mathbf{k}_1} \\
+    \psi_{i\mathbf{k}_2} \\
+    ... \\
+    \psi_{i\mathbf{k}_N}
+    \end{bmatrix}=\frac{1}{\sqrt{N}}\begin{bmatrix}
+    e^{i\mathbf{k}_1\cdot\mathbf{R}_1} & e^{i\mathbf{k}_1\cdot\mathbf{R}_2} & ... & e^{i\mathbf{k}_1\cdot\mathbf{R}_N} \\
+    e^{i\mathbf{k}_2\cdot\mathbf{R}_1} & e^{i\mathbf{k}_2\cdot\mathbf{R}_2} & ... & e^{i\mathbf{k}_2\cdot\mathbf{R}_N} \\
+    ... & ... & & ... \\
+    e^{i\mathbf{k}_N\cdot\mathbf{R}_1} & e^{i\mathbf{k}_N\cdot\mathbf{R}_2} & ... & e^{i\mathbf{k}_N\cdot\mathbf{R}_N}
+    \end{bmatrix}\begin{bmatrix}
+    \varphi_i(\mathbf{r}-\mathbf{R}_1) \\
+    \varphi_i(\mathbf{r}-\mathbf{R}_2) \\
+    ... \\
+    \varphi_i(\mathbf{r}-\mathbf{R}_N)
+    \end{bmatrix}
+\end{equation}
+According to equation (76), we find that every $\mathbf{k}$ corresponds to a energy eigenvalue and for $N$ quasi-continuous $\mathbf{k}$, the energy eigenvalue $E_i(\mathbf{k})$ will form a band, or more precisely, the $i$th band. Thus with a new method called the tight binding approximation, we have again concluded the origin of the band in solid. But it can be further simplified. Since $\varphi_i^*(\vec\xi-\mathbf{R}_s)$ and $\varphi_i(\vec\xi)$ represent two wave functions located at two lattice spacing a vector $\mathbf{R}_s$. Obviously the integral $J(\mathbf{R}_s)$ in equation (76) are non-zero only when these two wave functions overlap to some extent. The fully overlapped one is $\mathbf{R}_s=0$ and we will use $J_0$ to denote it\begin{equation}
+    J_0=-\int|\varphi_i(\vec\xi)|^2[U(\vec\xi)-V(\vec\xi)]d\vec\xi
+\end{equation}
+Secondly, the most proximate points are taken into consideration and at most cases, only these terms can make contributions to our band calculation and so we'll just stop here. In this way, equation (76) turns into\begin{equation}
+    E_i(\mathbf{k})=\varepsilon_i-J_0-\sum_{\mathbf{R}'_s}J(\mathbf{R}'_s)e^{-i\mathbf{k}\cdot\mathbf{R}'_s}
+\end{equation}
+where the $\mathbf{R}'_s$ means we only take the most proximate lattice vectors into account. Using equation (79), let's consider the simplest scenario, the band formed by the atomic s-orbital state in the simple cubic lattice (this is because the s-orbital wave function is spherical symmetric, which means the overlap integration of different orientation has to be the same). Assuming the lattice constant to be $a$, we have\begin{equation}
+    E(\mathbf{k})=\varepsilon_s-J_0-2J_1(\cos{k_xa}+\cos{k_ya}+\cos{k_za})
+\end{equation}
+Since the wave function of s-orbital has even parity, the overlap integration $J_1$ is undoubtedly positive. Apart form this, another slightly more complicated instance is the tight-binding model for the p-orbital wave functions. The p-orbital wave functions are triply degenerated, and we can prove that each of them corresponds to a independent band. The main feature of the p-orbital wave functions is that their unique orientations cause the overlap integration to vary. Take $p_x$-orbit as an example, among the six proximate overlap integration, the two along the x-axis has the biggest value $J_1$ and the remaining four has an equally smaller value $J_2$ (after taking the absolute value). However, due to its odd parity, $J_1$ is negative while $J_2$ is positive. The same thing applies for $p_y$ and $p_z$-orbit. Explicitly, we have\begin{equation}
+    E_{p_x}(\mathbf{k})=\varepsilon_p-J_0-2J_1\cos{k_xa}-2J_2(\cos{k_ya}+\cos{k_za})
+\end{equation}\begin{equation}
+    E_{p_y}(\mathbf{k})=\varepsilon_p-J_0-2J_1\cos{k_ya}-2J_2(\cos{k_xa}+\cos{k_za})
+\end{equation}\begin{equation}
+    E_{p_z}(\mathbf{k})=\varepsilon_p-J_0-2J_1\cos{k_za}-2J_2(\cos{k_xa}+\cos{k_ya})
+\end{equation}
+If we consider these three band in the first Brillouin zone, we can find that $E_{p_y}$ and $E_{p_z}$ remain degenerated along the $k_x$-axis.\\
+\\
+In the previous content, we've focused on the combination of the same atomic state at different atomic sites, which results in the rigorous correspondence of the energy level of a single atom and the band in the whole crystal. In other words, we're assuming the perturbation is way smaller than the energy difference of distinct atomic levels. But that's not always the case since the energy difference shrinks as the principal quantum number $n$ increases. That is to say, for outer electrons, different atomic state can also mix together, making things more complicated. Under this circumstance, we can perceive that the band is mainly formed by the combination of several atomic state which have a proximate energy, such as the $2s$-orbit and the $2p$-orbit. In this way, other miscellaneous states can be reasonably ignored. We first combine different atomic state as Bloch sums just as the equation (75)\begin{equation}
+    \psi_{2s}(\mathbf{k})=\frac{1}{\sqrt{N}}\sum_ne^{i\mathbf{k}\cdot\mathbf{R}_n}\varphi_{2s}(\mathbf{r}-\mathbf{R}_n)
+\end{equation}\begin{equation}
+    \psi_{2p_x}(\mathbf{k})=\frac{1}{\sqrt{N}}\sum_ne^{i\mathbf{k}\cdot\mathbf{R}_n}\varphi_{2p_x}(\mathbf{r}-\mathbf{R}_n)
+\end{equation}\begin{equation}
+    \psi_{2p_y}(\mathbf{k})=\frac{1}{\sqrt{N}}\sum_ne^{i\mathbf{k}\cdot\mathbf{R}_n}\varphi_{2p_y}(\mathbf{r}-\mathbf{R}_n)
+\end{equation}\begin{equation}
+    \psi_{2p_z}(\mathbf{k})=\frac{1}{\sqrt{N}}\sum_ne^{i\mathbf{k}\cdot\mathbf{R}_n}\varphi_{2p_z}(\mathbf{r}-\mathbf{R}_n)
+\end{equation}
+After that, we take the wave function of the electrons in the band as the linear combination of these four Bloch sums\begin{equation}
+    \psi(\mathbf{k})=a_1\psi_{2s}(\mathbf{k})+a_2\psi_{2p_x}(\mathbf{k})+a_3\psi_{2p_y}(\mathbf{k})+a_4\psi_{2p_z}(\mathbf{k})
+\end{equation}
+We take this into the wave equation so that the combination coefficients and the energy eigenvalue can be derived, which probably involves solving the secular equation of a four order matrix just as what we've done in the degenerate perturbation theory. More generally speaking, if there are more than one kind of atom in the primitive cell, we need to formulate the Bloch sum for every orbit of every atom. The linear combination of these Bloch functions is thereby a double summation which is distinct from the previous one.\\
+\\
+Take Si (or Ge) with a diamond-like lattice structure as an example. In its primitive cell, there are two kinds of atoms A and B with a relative displacement $\vec\tau=\frac14(a,a,a)$. For Si, the $3s$-orbit and the $3p$-orbit is hybridized. According to what we've just mentioned, at least 8 Bloch summations are required to construct the wave function of the band electrons. Each different linear combination corresponds to a band so from these 8 atomic orbits, 8 brand new bands emerged. Form the perspective of the bonding between atom A and B, the four bands with lower energies constitute the bonding states (also the valence band) and the rest constitute the anti-bonding states (also the conduction band). But we can also take another perspective. We can consider the hybridization of $s$-orbit and $p$-orbits, which forms four identical $sp^3$-orbits stretching in four distinct orientations of the vertex of a regular tetrahedron. After that, we construct the Bloch summations of these hybridized orbits and their linear combinations give different band.\\
+\\
+Here, at the end of this section we'll introduce a new series of function, the Wannier functions. To explain this, we need to look back at equation (75). What's new here is that we're going to point out that for any band, the Bloch function can be expressed in a way like\begin{equation}
+    \psi_{n\mathbf{k}}=\frac{1}{\sqrt{N}}\sum_{j}e^{i\mathbf{k}\cdot\mathbf{R}_j}W_n(\mathbf{r}-\mathbf{R}_j)
+\end{equation}Since the exponential function can be expressed in the multiple of three one-dimensional Fourier base functions, so the equation (89) is actually the three-dimensional Fourier transform of the $\psi_{n\mathbf{k}}$. For further explanation, we can introduce this following equality\begin{equation}
+    \frac{1}{N}\sum_{\mathbf{k}}e^{i\mathbf{k}\cdot(\mathbf{r}-\mathbf{r}')}=\delta(\mathbf{r}-\mathbf{r}')
+\end{equation}where the $\mathbf{r}$ is one of the Bravais lattice vector. So we can immediately obtain\begin{equation}
+    W_n(\mathbf{r}-\mathbf{R}_j)=\frac{1}{\sqrt{N}}\sum_{\mathbf{k}}e^{-i\mathbf{k}\cdot{R}_j}\psi_{n\mathbf{k}}
+\end{equation}It's also evident to us that the newly obtained Wannier functions constitute a orthonormal set of functions\begin{equation}
+    \int{W}_n^*(\mathbf{x}-\mathbf{r}){W}_n(\mathbf{x}-\mathbf{r}')d\mathbf{x}=\frac{1}{N}\sum_{\mathbf{k}}e^{i\mathbf{k}\cdot(\mathbf{r}-\mathbf{r}')}=\delta(\mathbf{r}-\mathbf{r}')
+\end{equation}Needless to mention, the $\psi_{n\mathbf{k}}$ also constitute a orthonormal set of functions. The transformation between these two sets of function is realized via a unitary matrix. Clearly, the Bloch functions of a band is delocalized throughout the crystal while the Wannier functions are much more localized as the overlap of different atomic wave function decreases, and the latter one will serve as a important tool when the localization of electrons dominates in a system. The Wannier functions have a better orthogonality than ordinary band wave functions, making it widely used in many other aspects. They can provide us with another fascinating model called the Hubbard model, which is vital in strongly correlated electron systems.\\
+\\
+Before we move to specific calculation of band structure, I want to reemphasize the physics captured by the tight-binding model. In this approximation method, those electrons with large binding energies located at the bottom of the spectrum remain close to their host atoms. But those that are bound more weakly become free to move. This happens because the tails of their wave functions have substantial overlap with electrons on neighbouring atoms, causing their states to mix. The weakly bound electrons which become dislodged from their host atoms are called valence electrons which are the same that typically sit in outer shells and give rise to bonding in chemistry. As we've mentioned previously, these electrons will form a band of extended states.
+\section{Examples of Band Structure}
+In section 5, we used the tight-binding approximation to solve the stationary wave equation. That's quite a static prospective, though. In this section, we'll first introduce a dynamical version of the tight-binding approximation by constructing a Hamiltonian involving hops between different atoms. For applications, we will use the newly-derived $\hat{H}$ to unravel the band structure of graphene.\\
+\\
+First let's picture a simple graph. If the electron just remains on a given atom, an appropriate Hamiltonian will be\begin{equation}
+    \hat{H}_0=E_0\sum_{n}\ket{n}\bra{n}
+\end{equation}
+Each of the position state $\ket{n}$ is an energy eigenstate of $\hat{H}_0$ with energy $E_0$. The electrons governed by this Hamiltonian don't move, which is quite boring. To add hops to our boring graph, we need to include the possibility that the electron can tunnel from one site to another. In the time-dependent perturbation theory, a state evolves as\begin{equation}
+    \ket\psi\rightarrow\ket\psi-\frac{i\Delta{t}}{\hbar}\hat{H}\ket\psi+\mathcal{O}(\Delta{t}^2)
+\end{equation}
+So if we do want to let the electrons hop to another site, we should include in the Hamiltonian a small term of the form $\ket{m}\bra{n}$. But there's one last component that ought to be included in our model, the locality. We're not willing to see electrons disappearing and reappearing many thousands of lattice spaces. We want our model to describe electrons merely hopping from one atom to neighbouring atoms instead. This motivates our final form of the Hamiltonian (take one dimensional atom chain for instance)\begin{equation}
+    \hat{H}=E_0\sum_n\ket{n}\bra{n}-t\sum_n(\ket{n}\bra{n+1}+\ket{n+1}\bra{n})
+\end{equation}
+In equation (95), the parameter $t$ is called the hopping parameter, which simply determines the probability that a particle will hop to a neighbouring site, or more precisely, the ratio $\frac{t^2}{E_0^2}$ determines. Let's reconsider the physics contained in $\hat{H}$. The probability of hopping to the left is identical as the probability of hopping to the right since we always require the Hamiltonian to be Hermitian. Moreover, the periodic boundary conditions are available when we're considering the peripheral sites. If the scenario is generalized to three dimensional lattice, it is also trivial to obtain the Hamiltonian\begin{equation}
+    \hat{H}=E_0\sum_{\mathbf{r}}\ket{\mathbf{r}}\bra{\mathbf{r}}-\sum_{\langle{\mathbf{r}\mathbf{r}'}\rangle}t_{\mathbf{r}',\mathbf{r}}(\ket{\mathbf{r}}\bra{\mathbf{r}'}+\ket{\mathbf{r}'}\bra{\mathbf{r}})
+\end{equation}
+where the first sum iterates over all Bravais lattice vector $\mathbf{r}$ and the second only sum over pairs of sites $\mathbf{r}$ and $\mathbf{r}'$ which are the nearest neighbours in the lattice. Alternatively, if these nearest neighbors are connected by a set of lattice vectors $\mathbf{a}$, then we can write this as\begin{equation}
+    \hat{H}=\sum_{\mathbf{r}}(E_0\ket{\mathbf{r}}\bra{\mathbf{r}}-\sum_{\mathbf{a}}t_{\mathbf{a}}\ket{\mathbf{r}}\bra{\mathbf{r}+\mathbf{a}})
+\end{equation}The Hamiltonian is Hermitian provided $t_{\mathbf{a}}=t_{-\mathbf{a}}$. As we've introduced in the chapter 5, the eigenstates of this Hamiltonian take the form\begin{equation}
+    \ket{\psi(\mathbf{k})}=\frac{1}{\sqrt{N}}\sum_{\mathbf{r}}e^{i\mathbf{k}\cdot\mathbf{r}}\ket{\mathbf{r}}
+\end{equation}It's simple to check that these states satisfy $\hat{H}\ket{\psi(\mathbf{k})}=E(\mathbf{k})\ket{\psi(\mathbf{k})}$. Now we can move on to calculate the band structure of the graphene. But before that, we'll have a brief introduction about its Bravais lattice, reciprocal lattice and the first Brillouin zone. It is known to us all that the graphene belongs to the honeycomb lattice, or a hexagonal lattice. For its primitive lattice vectors, we pick\begin{equation}
+    \mathbf{a}_1=(\frac{3a}{2}, \frac{\sqrt{3}a}{2})~~\mathrm{and}~~\mathbf{a}_2=(\frac{3a}{2}, -\frac{\sqrt{3}a}{2})
+\end{equation}
+where $a$ is the distance between neighbouring atoms. Sublattice A id defined normally but sublattice B has a translation $\mathbf{d}=(-a,0)$ additionally, which is slightly deviated from A. The reciprocal lattice is generated by vectors $\mathbf{b}_j$ satisfying $\mathbf{a}_i\cdot\mathbf{b}_j=2\pi\delta_{ij}$\begin{equation}
+    \mathbf{b}_1=(\frac{2\pi}{3a},\frac{2\pi\sqrt3}{3a})~~\mathrm{and}~~\mathbf{b}_2=(\frac{2\pi}{3a},-\frac{2\pi\sqrt3}{3a})
+\end{equation}
+It is obvious that the reciprocal lattice is also a hexagonal lattice. However, the six vertexes are not equivalent but actually carrying reverse vorticity, or in other words, the Berry phase. It will be explained in the content below. Now let us calculate the band structure for graphene. The carbon atoms in graphene have valency 1, with the $p_z$-atomic orbital abandoned by their parent ions and free to roam the lattice, which is the so-called $\pi$-orbital. We therefore write down a tight-binding model in which this electron can hop from one atomic site to another. We will work only with the closest neighbour interactions which, for the honeycomb lattice, means that the Hamiltonian admits hopping from a site of the A-lattice to the three proximate sites on the B-lattice, and vice versa. The Hamiltonian is given by\begin{equation}
+    \hat{H}=-t\sum_{\mathbf{r}}(\ket{\mathbf{r};A}\bra{\mathbf{r};B}+\ket{\mathbf{r};A}\bra{\mathbf{r}+\mathbf{a}_1;B}+\ket{\mathbf{r};A}\bra{\mathbf{r}+\mathbf{a}_2;B}+h.c.)
+\end{equation}
+where we're using the notation (I also related these to the notations used in the section 4 for clearness) as follows\begin{equation}
+    \ket{\mathbf{r};A}=\ket{\mathbf{r}}=\varphi(\mathbf{r}-\mathbf{R}_n)~~\mathrm{and}~~\ket{\mathbf{r};B}=\ket{\mathbf{r}+\mathbf{d}}~~\mathrm{with}~~\mathbf{d}=(-a,0)
+\end{equation}
+Comparing to equation (96), we've set $E_0=0$. After all it'll only add a constant to our result rather than any change of the physics. The energy eigenstates are again plane waves, but now with a suitable mixture of A and B sublattices. According to equation (63) and the distinctions between different types of lattice A and B (which probably leads to different coefficients), we reasonably make the assumption baesd on the tight-binding approximation\begin{equation}
+    \ket{\psi_\mathbf{k}(\mathbf{r})}=\ket{\psi(\mathbf{k})}=\frac{1}{\sqrt{2N}}\sum_{\mathbf{r}}e^{i\mathbf{k}\cdot\mathbf{r}}(c_A\ket{\mathbf{r};A}+c_B\ket{\mathbf{r};B})
+\end{equation}
+Plugging this into the Schr\"odinger equation, we find that the coefficients must satisfy the eigenvalue equation\begin{equation}\begin{bmatrix}
+0 & \gamma(\mathbf{k})\\
+\gamma^*(\mathbf{k}) & 0
+\end{bmatrix}\begin{bmatrix}
+c_A\\
+c_B
+\end{bmatrix}=E(\mathbf{k})\begin{bmatrix}
+c_A\\
+c_B
+\end{bmatrix}
+\end{equation}
+where\begin{equation}
+    \gamma(\mathbf{k})=-t(1+e^{i\mathbf{k}\cdot\mathbf{a}_1}+e^{i\mathbf{k}\cdot\mathbf{a}_2})
+\end{equation}
+The energy eigenvalues, according to equation (104) are simply $E(\mathbf{k})=\pm|\gamma(\mathbf{k})|$. We can therefore derive the energy eigenvalues\begin{equation}
+    E(\mathbf{k})=\pm{t}\sqrt{1+4\cos(\frac{3k_xa}{2})\cos(\frac{\sqrt3k_ya}{2})+4\cos^2(\frac{\sqrt3k_ya}{2})}
+\end{equation}
+The energy spectrum is a double cover of the first Brillouin zone, symmetric about the $E=0$ plane. This doubling can be ascribed to the fact that the honeycomb lattice consists of two intertwined Bravais lattice. Note that the carbon atoms in the graphene are sp$^2$ hybridized, the one redundant yet bound electron will only be filled in the lower band with $E(\mathbf{k})<0$. But what's really intriguing about the band structure of graphene is the intersections of the upper and lower band. They meet each other on the corners where\begin{equation}
+    \mathbf{k}=\mathbf{K}=(\frac{2\pi}{3a},\frac{2\pi}{3\sqrt3a})~~\mathrm{and}~~\mathbf{k}=\mathbf{K}'=(\frac{2\pi}{3a},-\frac{2\pi}{3\sqrt3a})
+\end{equation}
+Because the lower band is filled, the Fermi surface in graphene consists of just two points which are known as Dirac points, $\mathbf{K}$ and $\mathbf{K}'$ where two bands meet. To explain the origin of its name, we consider a Taylor series expansion in the vicinity of the Dirac points where $\mathbf{k}=\mathbf{K}+\mathbf{q}$. After a little bit of calculation, we derived the linear dispersion relation\begin{equation}
+    E(\mathbf{k})\approx\frac{3ta}{2}|\mathbf{q}|
+\end{equation}
+If you can still remember, this is exactly the kind of energy-momentum relation that we meet in relativistic physics for massless particles such as photons in which case we have $E=|\mathbf{p}|c$ where $p$ is the momentum and $c$ is the speed of light. For graphene, we have\begin{equation}
+    E(\mathbf{k})\approx\hbar{v}_F|\mathbf{q}|
+\end{equation}
+where $\hbar\mathbf{q}$ is the momentum measured with respect to the Dirac point and $v_F=\frac{3ta}{2\hbar}$ is the speed at which the excitation propagate. In graphene, $v_F$ is about 300 times smaller than the speed of light. Nevertheless, it remains true that the low-energy excitation of graphene is governed by the same equations that we meet in relativistic quantum field theory, or more precisely, the Dirac equation. Actually we can dig out more of the relativistic structure by returning to the matrix symbolizing the Hamiltonian in equation (104). In the vicinity of the Dirac point $\mathbf{k}=\mathbf{K}$ we have\begin{equation}
+    \gamma(\mathbf{k})=-t(1-2e^{\frac{3iq_xa}{2}}\cos(\frac{\pi}{3}+\frac{\sqrt3q_ya}{2}))
+\end{equation}
+If we expand this expression around the original point where both $p_x$ and $p_y$ near zero and only consider the leading term, we have\begin{equation}
+    \gamma(\mathbf{k})=-t[1-2(1+\frac{3iq_xa}{2}+\mathcal{O}(q_x^2))(\frac12-\frac{3q_ya}{4}+\mathcal{O}(q_y^2))]\approx\hbar{v}_F(iq_x-q_y)
+\end{equation}
+This means that the Hamiltonian in the vicinity of the Dirac point $\mathbf{k}=\mathbf{K}$ takes the form\begin{equation}
+    \hat{H}=\hbar{v}_F\begin{bmatrix}
+    0 & iq_x-q_y\\
+    -iq_x-q_y & 0
+    \end{bmatrix}=-\hbar{v}_F(q_x\sigma_y+q_y\sigma_x)
+\end{equation}
+where $\sigma_x$ and $\sigma_y$ are the Pauli matrices. If we recall the co-variant form of the Dirac equation\begin{equation}
+    (i\hbar\gamma^\mu\partial_\mu-mc)\psi(\mathbf{x},t)=0
+\end{equation}
+We will find that the equation (112) is actually the Dirac equation for a massless particle moving in two-dimensions, sometimes referred to as the Pauli equation. But there's something ironic here. In the original Dirac equation, the $2\times2$ gamma matrix structure comes from the spin carried by the electron. But that's not the origin of the matrix structure in equation (112). Essentially, we haven't mentioned spin anywhere in our discussion so far. The pseudo-spin degree of freedom arises from the existence of the two distinct sublattices A and B. We get a very similar equation in the vinicity of the other Dirac point. Expanding $\mathbf{k}=\mathbf{K}'+\mathbf{q}'$, we get the resulting Hamiltonian\begin{equation}
+    \hat{H}=-\hbar{v}_F(q_x\sigma_y-q_y\sigma_x)
+\end{equation}
+The difference in minus sign is closely related to different handedness or helicity in our discussion about the properties of the solutions to the Dirac equation. But as we mentioned above, we haven't included the spin of the electron yet but this is trivial actually. All we need is to repeat the discussion twice, once for spin up and the other for spin down. In conclusion, the low-energy excitation of graphene is described by four massless Dirac fermions. One pair comes from the spin degeneracy of the electrons and the other from the existence of the two Dirac points $\mathbf{K}$ and $\mathbf{K}'$ (occupy the vertexes of the hexagonal lattice alternatively, in two sets of three), sometimes referred to as the valley degeneracy.
+\section{Dynamics of Bloch Electrons}
+In this section, we will look into how electrons moving in a lattice environment react to external forces or fields. These electrons are called the Bloch electrons. We start by redefine some familiar quantities for Bloch electrons. In the quantum mechanics, if the classic description of a state makes sense, this state is characterized by a wavepacket. The corresponding location and momentum is approximate whose accuracy are constrained by the Heisenberg uncertainty principle. The group velocity of the electron wavepacket is\begin{equation}
+    \mathbf{v}=\frac1\hbar\frac{\partial{E}}{\partial\mathbf{k}}
+\end{equation}
+Actually, this is an average velocity, which means in quantum mechanics, we should directly use the Ehrenfest theorem to compute as\begin{equation}
+    \mathbf{v}=\frac1m\bra{\psi}-i\hbar\nabla\ket{\psi}
+\end{equation}
+Bloch theorem ensures that the electron eigenstates take the form\begin{equation}
+    \psi_\mathbf{k}(\mathbf{x})=e^{i\mathbf{k}\cdot\mathbf{x}}u_\mathbf{k}(x)
+\end{equation}
+with $\mathbf{k}$ in the Brillouin zone. We conduct a unitary transform to the Hamiltonian as\begin{equation}
+    e^{-i\mathbf{k}\cdot\mathbf{x}}\hat{H}e^{i\mathbf{k}\cdot\mathbf{x}}=\hat{H}_\mathbf{k}=-\frac{\hbar^2}{2m}(i\mathbf{k}+\nabla)^2+V(\mathbf{x})
+\end{equation}Then we will find out that\begin{equation}
+    \hat{H}_\mathbf{k}u_\mathbf{k}(\mathbf{x})=E(\mathbf{k})u_\mathbf{k}(\mathbf{x})
+\end{equation}Here we will use a little bit tricky method. Let's consider the Hamiltonian $H_{\mathbf{k}+\mathbf{q}}$ which we expand as\begin{equation}
+    \hat{H}_{\mathbf{k}+\mathbf{q}}=\hat{H}_{\mathbf{k}}+\frac{\partial\hat{H}_\mathbf{k}}{\partial\mathbf{k}}\cdot\mathbf{q}+\frac12\frac{\partial^2\hat{H}_\mathbf{k}}{\partial{k}_i\partial{k}_j}q_iq_j
+\end{equation}For small $\mathbf{q}$, we view this as a perturbation of $\hat{H}_\mathbf{k}$. The shift of the energy eigenvalues given by the first order perturbation theory is\begin{equation}
+    \Delta{E}=\bra{u_\mathbf{k}}\frac{\partial\hat{H}_\mathbf{k}}{\partial\mathbf{k}}\cdot\mathbf{q}\ket{u_\mathbf{k}}
+\end{equation}We also know the exact result is simply $E(\mathbf{k}+\mathbf{q})$. Expanding this to the first order and given $\mathbf{q}$ is arbitrarily chosen, we can obtain that\begin{equation}
+    \bra{u_\mathbf{k}}\frac{\partial\hat{H}_\mathbf{k}}{\partial\mathbf{k}}\ket{u_\mathbf{k}}=\frac{\partial{E}}{\partial\mathbf{k}}
+\end{equation}This is also demonstrated in the Feynman-Hellmann Theorem. Anyway, we get what we want\begin{equation}
+    \frac{1}{\hbar}\frac{\partial{E}}{\partial\mathbf{k}}=\frac{\hbar}{m}\bra{u_\mathbf{k}}(-i\nabla+\mathbf{k})\ket{u_\mathbf{k}}=\frac1m\bra{\psi_\mathbf{k}}-i\hbar\nabla\ket{\psi_\mathbf{k}}=\mathbf{v}
+\end{equation}It is truly surprising that the eigenstates in a crystal have a fixed average velocity even if the electrons are constantly colliding with the crystal and bouncing all over the place with a corresponding vanishing average velocity in our speculation. Thanks to the magic of Bloch's theorem, the electrons can glide through the crystal structure delightedly.\\
+\\
+Now, quite like what we've learnt in the statistical mechanics, we'll introduce some important concepts such as the energy state density and the Fermi surface. According to the periodic boundary conditions, the energy state has a uniform density of $\rho=\frac{V}{(2\pi)^3}$ in the $k$-space (which is merely the momentum space, be cautious to the difference with the $\mu$-space we encountered in statistical mechanics). Naturally, the total number of states within a certain energy limit $\varepsilon_0$ can be calculated as\begin{equation}
+    N(\varepsilon_0)=\int_{\varepsilon\leq\varepsilon_0}\rho{d}^3\mathbf{k}=V\int_{\varepsilon\leq\varepsilon_0}\frac{d^3\mathbf{k}}{(2\pi)^3}
+\end{equation}
+The integration region can be explicitly obtained by the given dispersion relation $\varepsilon=\varepsilon(\mathbf{k})$. If we use another partition, by the energy surface, and use $dk$ to denote the perpendicular distance between two neighbouring energy surface (which obviously follows the relation $|\nabla_{\mathbf{k}}\varepsilon(\mathbf{k})|=\frac{d\varepsilon(\mathbf{k})}{dk}$), $dS$ denote the unit area of the energy surface, we have\begin{equation}
+    N(\varepsilon_0)=\frac{V}{(2\pi)^3}\int_0^{\varepsilon_0}\frac{dSd\varepsilon}{|\nabla_{\mathbf{k}}\varepsilon(\mathbf{k})|}
+\end{equation}
+And the corresponding energy state density\begin{equation}
+    g(\varepsilon)=\frac{V}{(2\pi)^3}\int\frac{dS}{|\nabla_{\mathbf{k}}\varepsilon(\mathbf{k})|}
+\end{equation}
+where the integration region is the whole energy surface. Another frequently referred example is the s-orbital band of the simple cubic lattice under the tight-binding approximation. According to the equation (80), we have\begin{equation}
+    |\nabla_{\mathbf{k}}\varepsilon(\mathbf{k})|=2aJ_1\sqrt{\sin^2k_xa+\sin^2k_ya+\sin^2k_za}
+\end{equation}
+Take this into the equation (126) and given the spin degeneracy is 2, we have\begin{equation}
+    g(\varepsilon)=\frac{V}{8\pi^3aJ_1}\int\frac{dS}{\sqrt{\sin^2k_xa+\sin^2k_ya+\sin^2k_za}}
+\end{equation}
+Last important thing to mention is that please don't forget to take the spin degeneracy into consideration, if it exists. We will move on to the Fermi surface. Let's take a look at the simplest situation, the three-dimensional free electrons. According to the Pauli exclusive principle, these electrons will fill up a sphere in the momentum space as their ground state. The number of the state equals to the number of electrons. The sphere is called the Fermi sphere and the surface is called the Fermi surface. The corresponding energy, momentum, velocity of this surface are called the Fermi energy, Fermi momentum, Fermi energy. For electrons moving in the periodic lattice field, their ground state can be discussed in a similar pattern. According to the band theory, the energy levels are divided into different bands and the electrons fill into the lowest energy levels in these bands. But there are two distinct scenarios here.\\
+\\
+The first one is that all the electrons exactly filled up all the energy states in the lowest bands and the higher bands are left in vacancy. The highest fully-occupied band is called the valence band and the lowest vacant band is called the conduction band. Another scenario is that apart from those fully-occupied bands, there exists some partly-occupied bands which is called the conduction band. The highest occupied energy level is called the Fermi level. In every partly-occupied band, there's a interface which partitioned the occupied area and the vacant area. All these interfaces constitute the Fermi surface. The second scenario describes a metallic conductor.\\
+\\
+Using what we're introduced, we can prove that a fully-occupied band is insulated, which means it carries neither current nor heat. The current density is determined by $\mathbf{j}=-\rho\mathbf{v}$, where $\rho$ is the negative charge density. According to the Bloch theorem, the electron is evenly distributed in the crystal, so every state in the filled band houses a electron. Recall the equation (124), the total current density is thereby\begin{equation}
+    \mathbf{j}=-2\int_\mathrm{Bz}\rho\frac{V}{(2\pi)^3}\mathbf{v}d^3\mathbf{k}=-\frac{2e}{\hbar}\int_\mathrm{Bz}\frac{d^3\mathbf{k}}{(2\pi)^3}\frac{\partial{E}}{\partial\mathbf{k}}
+\end{equation}
+If we look into this equation carefully, we could tell that it vanishes. This follows because the band has the time-reversal symmetry (TRS). That is to say, a pair of wave vector $\mathbf{k}$ and $-\mathbf{k}$ share the same energy, which means that $\frac{\partial{E}}{\partial\mathbf{k}}(\mathbf{k})=-\frac{\partial{E}}{\partial\mathbf{k}}(\mathbf{-k})$. So obviously, when the integration region is the whole Brillouin zone, the integration gives 0. The same argument shows that a filled band cannot transport energy in the form of heat when we define the heat current as\begin{equation}
+    \mathbf{j}_E=2\int_\mathrm{Bz}\rho\frac{E\mathbf{v}}{(2\pi)^3}d^3\mathbf{k}=\frac1{\hbar}\int_\mathrm{Bz}\frac{d^3\mathbf{k}}{(2\pi)^3}\frac{\partial(E^2)}{\partial\mathbf{k}}
+\end{equation}
+which again vanishes when integrated over a fully-occupied band. Nonetheless, while the heat transport through electrons is forbidden, there are other degrees of freedom such as phonons which can complete exactly the same mission. The next topic is the effective mass. But we need to first, make an analogy of the work-energy principle in the classic mechanics as\begin{equation}
+    \frac{d}{dt}(\hbar\mathbf{k})=\hbar\dot{\mathbf{k}}=\vec{F}
+\end{equation}
+But do notice the main difference here is that $\hbar\mathbf{k}$ is the so-called quasi-momentum (or lattice momentum), which does not equal to the average value or the eigenvalue of the momentum operator. This is because the translation invariance exists not through an arbitrary vector but the Bravais lattice vector. With equation (123) and (131), we can derive the so-called effective mass.\begin{equation}
+    a_i=\frac{dv_i}{dt}=\sum_j\frac{\partial{v_i}}{\partial{k_j}}\frac{dk_j}{dt}=\frac1{\hbar}\sum_j\frac{\partial^2E}{\partial{k_i}\partial{k_j}}\frac{dk_j}{dt}=\frac1{\hbar^2}\sum_j\frac{\partial^2E}{\partial{k_i}\partial{k_j}}F_j
+\end{equation}
+With this expression, we can naturally set the reciprocal of the effective mass as a second order tensor\begin{equation}
+    (m^*_{ij})^{-1}=\frac1{\hbar^2}\frac{\partial^2E}{\partial{k_i}\partial{k_j}}
+\end{equation}
+If we choose the $x,y,z$-axis carefully to be the major axis of the reciprocal mass tensor, all the off-diagonal elements vanish and we thereby obtain a diagonal matrix where\begin{equation}
+    m^*_x=\hbar^2(\frac{\partial^2E}{\partial{k_x}^2})^{-1},~m^*_y=\hbar^2(\frac{\partial^2E}{\partial{k_y}^2})^{-1},~m^*_z=\hbar^2(\frac{\partial^2E}{\partial{k_z}^2})^{-1}
+\end{equation}Here let's introduce another topic which should have been discussed in previous chapters, the $\mathbf{k}\cdot\mathbf{p}$ perturbation. The reason why I postponed it until now is that I find this topic related to the effective mass. The $\mathbf{k}\cdot\mathbf{p}$ perturbation is an approach that expands the Bloch electron wavefunction near a high-symmetry point in the Brillouin zone. It treats the crystal momentum as a small perturbation around this point. First of all, the Bloch Theorem tells us the wavefunctions can be written as\begin{equation}
+    \psi_{n\mathbf{k}}=e^{i\mathbf{k}\cdot\mathbf{r}}u_{n\mathbf{k}}(\mathbf{r})
+\end{equation}We plug this into the Schr\"odinger equation to obtain the momentum-dependent Hamiltonian as\begin{equation}
+    \hat{H}(\mathbf{k})=\frac{1}{2m}(\mathbf{p}+\hbar\mathbf{k})^2+V(\mathbf{r})
+\end{equation}If we denote the $\mathbf{k}=0$ Hamiltonian as $\hat{H}_0=\frac{\mathbf{p}^2}{2m}+V(\mathbf{r})$, then we have\begin{equation}
+    \hat{H}(\mathbf{k})=\hat{H}_0+\frac{\hbar}{m}\mathbf{k}\cdot\mathbf{p}+\frac{\hbar^2k^2}{2m}
+\end{equation}Here we treat the second term in the right hand side as a perturbation, so the first-order correction can be calculated as\begin{equation}
+    E_n^{(1)}=\mathbf{k}\cdot\bra{u_{n0}^{(0)}}\mathbf{p}\ket{u_{n0}^{(0)}}=0
+\end{equation}This integration vanishes because of the inversion symmetry (But do notice that this follows only when a high-symmetry point is chosen. For an arbitrarily chosen point $\mathbf{k}_0$, the first-order perturbation usually gives a non-zero value). The second-order correction gives\begin{equation}
+    E_n(\mathbf{k})\approx{E_n}^{(0)}+\frac{\hbar^2k^2}{2m}+\frac{\hbar^2}{m^2}\sum_{n'\neq{n}}\frac{|\bra{u_{n'0}^{(0)}}\mathbf{k}\cdot\mathbf{p}\ket{u_{n0}^{(0)}}|^2}{E_{n0}^{(0)}-E_{n'0}^{(0)}}
+\end{equation}The first-order correction of the wavefunction can be calculated as well\begin{equation}
+    u_{n\mathbf{k}}=u_{n0}+\frac{\hbar}{m}\sum_{n'\neq{n}}\frac{\mathbf{k}\cdot\bra{u_{n'0}^{(0)}}\mathbf{p}\ket{u_{n0}^{(0)}}}{E_{n0}^{(0)}-E_{n'0}^{(0)}}u_{n'0}
+\end{equation}From equation (140), we can perceive that if $\mathbf{k}$ is close enough to some reference point $\mathbf{k}_0$, then corrections of the wavefunction can be thrown away except for the phase factor originating from the Bloch Theorem. For general $\mathbf{k}_0$, we can use a new set of wavefunctions as basis\begin{equation}
+    \chi_{j\mathbf{k}}=e^{i(\mathbf{k}-\mathbf{k}_0)\cdot\mathbf{r}}\psi_{j\mathbf{k}_0}=e^{i\mathbf{k}\cdot\mathbf{r}}u_{j\mathbf{k}_0}
+\end{equation}We assume these wavefunction constitute an orthonormal basis, so we can plug the linear combination of these functions into the Schr\"odinger equation\begin{equation}
+    [\frac{p^2}{2m}+V(\mathbf{r})]\psi_{n\mathbf{k}}=[-\frac{\hbar^2}{2m}\nabla^2+V(\mathbf{r})]\psi_{n\mathbf{k}}=E_n(\mathbf{k})\sum_jA_{nj}(\mathbf{k})\chi_{j\mathbf{k}}
+\end{equation}expand this equation and eliminate the phase factor, we have\begin{equation}
+    \sum_jA_{nj}(\mathbf{k})[E_j(\mathbf{k}_0)+\frac{\hbar}{m}(\mathbf{k}-\mathbf{k}_0)\cdot\mathbf{p}+\frac{\hbar^2}{2m}(k^2-k_0^2)]u_{j\mathbf{k}_0}=E_n(\mathbf{k})\sum_jA_{nj}(\mathbf{k})u_{j\mathbf{k}_0}
+\end{equation}Take the inner product with $u^*_{i\mathbf{k}_0}$, and define the momentum matrix element as\begin{equation}
+    \mathbf{p}_{ij}=\int_\mathrm{all}u^*_{i\mathbf{k}_0}\mathbf{p}u_{j\mathbf{k}_0}d^3\mathbf{r}
+\end{equation}In this way, we can obtain\begin{equation}
+    \sum_jA_{nj}(\mathbf{k})([E_j(\mathbf{k}_0)-E_n(\mathbf{k})+\frac{\hbar^2}{2m}(k^2-k_0^2)]\delta_{ij}+\frac{\hbar}{m}(\mathbf{k}-\mathbf{k}_0)\cdot\mathbf{p}_{ij})=0
+\end{equation}All band levels constitute this linear equation system. To have non-zero solutions, we can solve the secular equation, from which energy levels can be yielded. In principle, as long as the basis we use is large enough, we can easily obtain the energy and wavefunction for any lattice momentum $\mathbf{k}$. Nevertheless, given in that case,the complexity is totally unacceptable, the $\mathbf{k}\cdot\mathbf{p}$ perturbation method is mainly used for deriving the energy and wavefunction where the lattice momentum is proximate to some high-symmetry point in the Brillouin zone.\\
+\\
+Now let's return to the equation (139). If we rewrite it into another form as (notice that in reality, the effective mass is a second-order tensor)\begin{equation}
+    E_n(\mathbf{k})\approx{E_n}^{(0)}+\frac{\hbar^2k^2}{2m^*}
+\end{equation}This expression has a explicit meaning since near the bottom of a conduction band (or the top of a valence band), the energy-momentum dispersion relation often looks quadratic as a free particle, so we approximate the electron's dynamics by a free particle with an effective mass. It's also easy to perceive that the effective mass unravels the curvature of the band. From the equation (133), we can obtain\begin{equation}
+    (m^*_{ij})^{-1}=\frac{1}{m}\delta_{ij}+\frac{1}{m^2}\sum_{n'\neq{n}}\frac{\bra{u_{n'0}^{(0)}}p_i\ket{u_{n0}^{(0)}}\bra{u_{n0}^{(0)}}p_j\ket{u_{n'0}^{(0)}}+\bra{u_{n'0}^{(0)}}p_j\ket{u_{n0}^{(0)}}\bra{u_{n0}^{(0)}}p_i\ket{u_{n'0}^{(0)}}}{E_{n0}(\mathbf{k}_0)-E_{n'0}(\mathbf{k}_0)}
+\end{equation}Since the effective mass is related with the second order derivative of the energy-momentum dispersion relation, we can conclude that the wider (or narrower) a band is, the lighter (or heavier) its effective mass will be. And at the bottom of a band, the effective mass is positive while at the top, it's negative for sure. All above applies only for non-degenerate perturbation. But for degenerate perturbation, there's nothing new to us except for solving the secular equation as we always did before. Last thing to mention is that when we choose to use the effective mass approximation, the crystal momentum $\hbar\mathbf{k}$ has now become the real (or virtually real) momentum of the imaginary free particle with the effective mass $m^*$. We can actually have $\mathbf{v}(\mathbf{k})m^*=\hbar\mathbf{k}=\mathbf{p}$.\\
+\\
+After the crucial concept, effective mass is fully discussed, we can move on to focus on the motion of electrons in electric and magnetic field. The equation (131) has already given us a hint. Suppose we impose a uniform electric field which induces a constant force $\vec{F}=-e\mathbf{E}$ on Bloch electrons, the quasi-momentum (or lattice momentum in other words), will exhibit a linear relation with the elapsed time, which means the electron is moving at a constant speed in the momentum space. If we neglect any state transition probably caused by the external electric field, the motion of electrons are thereby constrained in discrete bands. When the electron reaches the boundary of the Brillouin zone, it will be equivalently transported backwards (by a reciprocal lattice vector, undoubtedly) since these two points share the same reduced wave vector. In a nutshell, what we'll genuinely observe is a virtual motion loop of an electron inside the Brillouin zone.\\
+\\
+The essence of this electron motion loop is actually the oscillation of its velocity. In a simple model of one-dimensional tight-binding model, when only the most proximate sites are considered, we have\begin{equation}
+    E^i(k)=\varepsilon_i-J_0-2J_1\cos(ka)
+\end{equation}The electron velocity and effective mass can be easily derived as\begin{equation}
+    v(k)=\frac{1}{\hbar}\frac{dE}{dk}=\frac{2J_1a}{\hbar}\sin(ka)
+\end{equation}\begin{equation}
+    m^*(k)=\hbar^2(\frac{d^2E}{dk^2})^{-1}=\frac{\hbar^2}{2J_1a^2\cos(ka)}
+\end{equation}In this way, we can figure out the principle of the electron oscillation. Suppose the electron is place at the band bottom at $t=0$, where the effective mass is positive. The external electric field will cause its velocity to increase. When the electron reaches $k=\frac{\pi}{2a}$, the effective mass diverges and the velocity therefore peaks. After that, the effective mass becomes negative. Despite $k$ are still increasing, the velocity is, however, decreasing. Eventually, the velocity reaches zero at $k=\frac{\pi}{a}$.\\
+\\
+Shortly afterwards, $k$ returns to $-\frac{\pi}{a}$ due to the lattice symmetry (as if the electron bounces back after colliding with the band barrier) and the external electric field makes $k$ to increase. But this time, the velocity is negative (mainly because the effective mass is negative) according to the equation (147), which causes the electron to move backwards. The velocity also peaks at $k=-\frac{\pi}{2a}$ where the effective mass goes to $-\infty$. Then the sign of effective mass flips and the external field serves as a break again before the electron finally reaches to its origin, $k=0$ and $v=0$. This entire process is called the Bloch Oscillation.\\
+\\
+This phenomenon is actually very counter-intuitive since a DC field does not induce a DC current, which somehow violates what we've learnt about the electronic transport before. That is mainly because the electrons are scattered by impurities or thermal lattice vibrations (phonons) in reality which destroy the coherency of Bloch oscillations and give rise to a current. Another seemingly negligible thing is the quantum tunneling. From the perspective of quantum mechanics, electrons have a certain possibility of transmission when encountering a energy barrier, which enables some of them in the valence band to enter the conduction band. This is naturally neglected in our quasi-classic framework but actually plays a vital role in the semiconductor physics.\\
+\\
+To model the effect that electrons collide with impurities and lattice vibrations, we can recall the famous Drude model. The Drude model for one-dimensional free electron gas (an external electric field is imposed for sure) set up an extremely simple yet intrinsic framework for conductivity. Here we use $\tau$ to denote the scattering relaxation time, which is the average time interval between collisions. Then we can establish the equation for momentum\begin{equation}
+    p(t+dt)=(1-\frac{dt}{\tau})p(t)+F(t)dt
+\end{equation}or in other words\begin{equation}
+    \frac{dp(t)}{dt}=F(t)-\frac{p(t)}{\tau}
+\end{equation}If we use $v_d$ to denote the average drift velocity of the electron gas, we have\begin{equation}
+    m\frac{dv_d}{dt}=F(t)-m\frac{v_d}{\tau}
+\end{equation}If the external electric field is static, then according to the equation (115), the average drift velocity is time-independent. We can therefore derive that\begin{equation}
+    v_d=\frac{F\tau}{m}=-\frac{eE\tau}{m}
+\end{equation}And in an average sense, we can calculate the current density as\begin{equation}
+    j=-nev_d=\frac{ne^2\tau}{m}E
+\end{equation}Now we hope to add the quantum effects of lattices, yet rather remarkably, the Drude equation remains essentially unchanged. The only difference is that the mass $m$ of the free electron will be replaced by the effective mass $m^*$, namely\begin{equation}
+    \sigma=\frac{ne^2\tau}{m^*}
+\end{equation}After discussing the motion in electric field, let's move on to motion in magnetic field. Recall on what we've learnt in the electromagnetism in special relativity\begin{equation}
+    \mathcal{L}=-mc^2\sqrt{1-\frac{v^2}{c^2}}-e\Phi+\frac{e}{c}\mathbf{A}\cdot\mathbf{v}
+\end{equation}\begin{equation}
+    \vec{F}=e\mathbf{E}+\frac{e}{c}\mathbf{v}\times\mathbf{B}=e(-\nabla\Phi-\frac{1}{c}\frac{\partial\mathbf{A}}{\partial{t}})+\frac{e}{c}\mathbf{v}\times(\nabla\times\mathbf{A})
+\end{equation}
+Therefore, the trajectory of the freely charged particles in a uniform magnetic field in the real space is a spiral (a closed circle in momentum space for sure), with a cyclotron frequency\begin{equation}
+    \omega_c=\frac{eB}{mc}
+\end{equation}Moreover, since the Lorentz force does not do work, the trajectory of electron are also fixed on isoenergetic surfaces of momentum space. Combining them together, we conclude that the trail of electron is the intersection line of the isoenergetic surface and the surface that is perpendicular to the external magnetic field ($k_x$-$k_y$ surface if $\mathbf{B}=B\hat{z}$). In solids, we prefer to choose another version, which is of course, the quantum mechanics. With the presence of an external magnetic field, all we have to do is modify the canonical momentum operator. The Hamiltonian of a free electron is thereby written as\begin{equation}
+    \hat{H}=\frac{1}{2m}(\mathbf{p}+\frac{e}{c}\mathbf{A})^2
+\end{equation}In the equation above, we've set the electron to exhibit no relativity effects and the scalar potential is zero since no electric field is given. Also, we choose the metric to be $(+,-,-,-)$, and $ds^2=dx_\mu{dx^\mu}=c^2dt^2-dx^2-dy^2-dz^2$. The action is defined by\begin{equation}
+    S=-mc\int{ds}-\frac{e}{c}\int{A_\mu}dx^\mu
+\end{equation}where the four-dimensional vector potential is defined as $A^\mu=(\Phi(\mathbf{x}),\mathbf{A}(\mathbf{x}))$. We now need to find out a vector potential $\mathbf{A}(\mathbf{x})$ to satisfy $\nabla\times\mathbf{A}=\mathbf{B}=B\hat{z}$. The answer is of course not unique. If we adopt the Landau gauge, namely $\mathbf{A}=(-By,0,0)$, we have\begin{equation}
+    \hat{H}=\frac{1}{2m}[(p_x-\frac{eBy}{c})^2+p_y^2+p_z^2]
+\end{equation}Since the Hamiltonian is commutative with $\hat{p_x}$ and $\hat{p_z}$, we can take the common eigenstate of these operators, $k_x$ and $k_z$ are therefore good quantum numbers. Use the separation of variable, we assume the solution of stationary Schr\"odinger equation to take the form as\begin{equation}
+    \psi(x,y,z)=\phi(y)e^{ik_xx}e^{ik_zz}
+\end{equation}Plug this into the Schr\"odinger equation, we derive that\begin{equation}
+    [-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial{y^2}}+\frac{1}{2m}(\hbar{k}_x-\frac{eBy}{c})^2]\phi(y)=(E-\frac{\hbar^2k_z^2}{2m})\phi(y)
+\end{equation}Introduce the constant $y_0=\frac{\hbar{c}k_x}{eB}$, and we will encounter a very reminiscent equation\begin{equation}
+    [-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial{y^2}}+\frac12m\omega_c^2(y-y_0)^2]\phi(y)=(E-\frac{\hbar^2k_z^2}{2m})\phi(y)
+\end{equation}This is exactly the equation of quantum oscillator. We can easily obtain the solution\begin{equation}
+    \psi(x,y,z)=N_ne^{-\frac{m\omega_c}{2\hbar}(y-y_0)^2}H_n[\sqrt{\frac{m\omega_c}{\hbar}}(y-y_0)]e^{i(k_xx+k_zz)}
+\end{equation}where $H_n$ is the $n$th Hermite polynomial and $N_n$ is the normalization coefficient. The energy levels are given by\begin{equation}
+    E_n=(n+\frac12)\hbar\omega_c+\frac{\hbar^2k_z^2}{2m}
+\end{equation}Alike the free electron scenario, the motion of electron in solid can be described by the Hamiltonian\begin{equation}
+    \hat{H}=\frac{1}{2m}(\mathbf{p}+\frac{e}{c}\mathbf{A})^2+V(\mathbf{r})
+\end{equation}Due to the complexity of the potential field, obtaining the exact solution is overwhelmingly difficult. But if what we're focusing on are merely some special points (like the top and bottom of a band), the effective mass approximation is accurate enough. We use the effective mass to illustrate the influence of the periodic potential field (in this way, the cyclotron frequency is also expressed in the effective mass, and the correction of wavefunction is quite similar to what we've done in the $\mathbf{k}\cdot\mathbf{p}$ perturbation). But just as we mentioned in $\mathbf{k}\cdot\mathbf{p}$ perturbation, the approximation is valid only when the target point is slightly deviated from the reference point. Consequently, we usually utilize it to calculate those high-symmetry points. In a nutshell, the Hamiltonian are converted into\begin{equation}
+    \hat{H}=\frac{1}{2m^*}(\mathbf{p}+\frac{e}{c}\mathbf{A})^2
+\end{equation}Let's return to the free electron gas scenario. According to quantum mechanics, the motion in $xy$-plane is a harmonic oscillation, which has a discrete and quantized energy spectrum, named Landau level. If we're consider a two-dimensional free electron gas in a $L_x\times{L_y}$ region (actually periodic boundary conditions, and $k_z=0$), the Landau level is degenerate for different $k_x$. We can also derive the degeneracy as (spin is also taken into consideration)\begin{equation}
+    n=2\frac{L_y}{\Delta{y}_0}=2\frac{eB}{\hbar{c}}\frac{L_y}{\Delta{k_x}}=\frac{L_xL_yeB}{\pi\hbar{c}}
+\end{equation}Let's now slightly back to the equation (159) and discuss the application of the cyclotron motion. When an external magnetic field is imposed, the moving electrons form a series of discrete Landau levels, with the cyclotron frequency $\omega_c$. The gap of the neighbouring level is the constant $\hbar\omega_c$. This inspire us that when an alternating current (AC) electric field (of course with the same frequency as $\omega_c$) is imposed, time-dependent perturbation theory tells us that there is probability of quantum transition (either 
+stimulated absorption or radiation). The absorption, which causes the quantum number of the Landau level to raise, is called the cyclotron resonance.\\
+\\
+But what's the application of this intriguing physical phenomenon? In equation (169), the bothering periodic potential is sucked into the effective mass. By doing so, we regard the electrons in solids as the free electron gas with the cyclotron frequency of $\omega_c=\frac{eB}{m^*c}$. Here we can see that if the cyclotron frequency is successfully measured from experiment, the effective mass is also known to us, which is of great value. But it has to be expounded that the actual experiment configuration requires a strong external magnetic field, an extremely low temperature and some exceedingly pure sample. This is to amplify the cyclotron frequency (namely shorten the cyclotron period to make it way shorter than the relaxation time $\tau$), otherwise the perfect Landau level can easily be undermined by scattering with impurities.\\
+\\
+The de Haas-van Alphen effect (dHvA effect) describes how the magnetisation $M$ (or magnetic susceptibility $\chi=M/H$) varies with external magnetic field $\mathbf{B}=\mu_0\mathbf{H}$. From thermodynamics, we know that\begin{equation}
+    dU=TdS-pdV-\mu_0MdH
+\end{equation}If the volume change can be neglected, the differential magnetic susceptibility can be expressed as\begin{equation}
+    \chi=\frac{\partial{M}}{\partial{H}}=-\frac{1}{\mu_0}\frac{\partial^2E}{\partial{H}^2}=-\mu_0\frac{\partial^2E}{\partial{B}^2}
+\end{equation}So in fact, to figure out how magnetic susceptibility varies, we need to figure out the relation between total energy $E$ and external magnetic field $B$. To demonstrate this, we need to revisit the degeneracy of Landau level. Let's take two-dimensional free electron gas as example. The density of state is a constant $\frac{mL_xL_y}{\pi\hbar^2}$. So if we calculate the number of state between two neighbouring Landau levels, we can easily prove that the number of state corresponds to the degeneracy of Landau level. Besides, we further suppose the quasi-continuous energy spectrum is now split into Landau levels in the easiest manner. By easiest I mean those energy satisfy $k\hbar\omega_c<\varepsilon<(k+1)\hbar\omega_c$ are categorized into the $n=k$ Landau level. Among all the states in this category, in terms of energy, some got raised and also vice versa. So we can imagine if the Fermi energy perfectly coincides with the upper bound, namely $E_F=(m+1)\hbar\omega_c$, then we can see even though there are descend and ascend in forming every Landau level, the total energy is unchanged compared with free electron gas. However, when $m\hbar\omega_c<E_F<(m+1)\hbar\omega_c$, things could be quite different.\\
+\\
+When $m\hbar\omega_c<E_F<(m+1/2)\hbar\omega_c$, the energy of all the electrons in the highest level are raised to $\varepsilon=(m+1/2)\hbar\omega_c$. When $(m+1/2)\hbar\omega_c<E_F<(m+1)\hbar\omega_c$, some of the electrons in the highest level are raise but some are lowered. So when compared to the free electron scenario, the adding of a magnetic field will cause the total energy to fluctuate. But one can also easily discover that even there's fluctuation in total energy, the discrete Landau level always gives the system a higher energy than free electron scenario. The fluctuation of energy results in the variation of magnetic susceptibility, which is the celebrated dHvA effect. The period of fluctuation can also be easily derived. When $B$ increases, the Fermi energy $E_F$ will meet with two Landau levels, successively. The energy difference of two neighbouring levels gives the fluctuation period\begin{equation}
+    \Delta(\frac{1}{B})=\frac{e}{m^*cE_F}
+\end{equation}A more complicated case is the three-dimensional free electron gas. Equation (167) and its derivation tell us that when discussing the motion of electrons, $z$-direction and $xy$-plane is independent from each other. If we are to plot the permitted state inside the Fermi sphere in momentum space, we can get a series of coaxial cylinders. In fact, we can explicitly derive the density of states, but since the $x$ and $y$ directions are now in the form of Landau levels, we only need to consider the $z$ direction. Recall the equation (126) and (167), we have\begin{equation}
+    g(\varepsilon)=D\frac{L_z\sqrt{2m}}{2\pi\hbar}\sum_n\frac{1}{\sqrt{\varepsilon-(n+\frac12)\hbar\omega_c}}
+\end{equation}where the capital letter $D$ denotes the degeneracy of the two-dimensional free electron gas we mentioned in equation (170). To figuratively picture this, let's imagine pushing a series of coaxial cylinders into a sphere with a fixed radius. The radius of different cylinder in arbitrary unit are $\sqrt{\frac{B}2}$, $\sqrt{\frac{3B}2}$, etc. But in fact, the boundary of different Landau level are $\sqrt{B}$, $\sqrt{2B}$, etc., also in arbitrary unit. The electrons in the Fermi sphere, especially in $\sqrt{(n-1)B}<r<\sqrt{nB}$ region will be pulled back to the inner cylinder with a radius of $r=\sqrt{(n-\frac12)B}$, while the electrons in $\sqrt{nB}<r<\sqrt{(n+1)B}$ region will be pushed outwards to the outer cylinder with a radius of $r=\sqrt{(n+\frac12)B}$. All above is forced by the external magnetic field for sure, during which process the motion in $z$-direction isn't affected at all though. In conclusion, the magnetic field will raise the total energy and when the Fermi sphere is tangential with one of those coaxial cylinders, the system energy reaches its maximum.\\
+\\
+We can also calculate the fluctuation period of magnetic susceptibility for this situation. Here we can see the largest cross section of the Fermi sphere that is perpendicular to the magnetic field, which we call the extremal orbit and use $S_F$ to denote it, will dominate. Suppose $S_F$ being tangential to two coaxial cylinders successively, we can obtain\begin{equation}
+    \Delta(\frac{1}{B})=\frac{2e\pi}{c\hbar{S_F}}
+\end{equation}If we use the wave vector that is parallel to the external magnetic field $k_B$ as a independent variable, $S_F$ could be expressed as a function of $k_B$. One can easily deduce instinctively that\begin{equation}
+    \frac{\partial{S_F}(k_B)}{\partial{k_B}}=0
+\end{equation}This enlightened scientists to utilize this equation to probe microscopic crystal structure with the orientation of the external magnetic field constantly varying. Up till now, we've substantially discussed the motion of electrons under either electric field or magnetic field, but not the combination of them. Yet the motion under both electric and magnetic field plays a vital role in some advanced and intriguing physical phenomenon such as the quantum Hall effect (QHE). So I'd very like to have one more small discussion here. We first confine our calculation within the two-dimensional free electron gas, with external compound field $\mathbf{E}=(E,0,0)$, $\mathbf{B}=(0,0,B)$ and continue to use Landau gauge $\mathbf{A}=(0,Bx,0)$. The Schr\"odinger equation can be written as\begin{equation}
+    [\frac{1}{2m}(\mathbf{p}+\frac{e}{c}\mathbf{A})^2+eEx]\psi(x,y)=E_n\psi(x,y)
+\end{equation}We make an ansatz here that\begin{equation}
+    \psi(x,y)=\phi(x)e^{ik_yy}
+\end{equation}Take our configuration and ansatz into equation (177), we have\begin{equation}
+    [-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial{x}^2}+(\frac{eB\hbar{k_y}}{mc}+eE)x+\frac{e^2B^2}{2mc^2}x^2]\phi(x)=(E-\frac{\hbar^2k_y^2}{2m})\phi(x)
+\end{equation}When encountering this kind of equation, we're sure that it's closely related to the quantum harmonic oscillator. In fact, we have\begin{equation}
+    \{\frac{\hbar^2}{2m}\frac{\partial^2}{\partial{x^2}}+\frac{m}{2}(\frac{eB}{mc})^2[x+\frac{mc^2}{e^2B^2}(\frac{eB\hbar{k_y}}{mc}+eE)]^2\}\phi(x)=[E_n-\frac{\hbar^2k_y^2}{2m}+\frac{mc^2}{2e^2B^2}(\frac{eB\hbar{k_y}}{mc}+eE)^2]\phi(x)
+\end{equation}Let $\xi=x+\frac{mc^2}{e^2B^2}(\frac{eB\hbar{k_y}}{mc}+eE)$ and $\omega_c=\frac{eB}{mc}$ as previous, we have\begin{equation}
+    (-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial\xi^2}+\frac12m\omega_c^2\xi^2)\phi(\xi)=[E_n-\frac{\hbar^2k_y^2}{2m}+\frac{mc^2}{2e^2B^2}(\frac{eB\hbar{k_y}}{mc}+eE)^2]\phi(\xi)
+\end{equation}We obtain a reminiscent equation whose energy eigenvalues and eigenfunctions couldn't be more familiar. To explore some physics, we need to write out the energy eigenvalues\begin{equation}
+    E_n=(n+\frac12)\hbar\omega_c+\frac{\hbar^2k_y^2}{2m}-\frac{mc^2}{2e^2B^2}(\frac{eB\hbar{k_y}}{mc}+eE)^2
+\end{equation}If we introduce the magnetic length $l_B=\sqrt{\frac{c\hbar}{eB}}$, we can express the energy eigenvalues as\begin{equation}
+    E_n=(n+\frac12)\hbar\omega_c-eE(k_yl_B^2+\frac{eE}{m\omega_c^2})+\frac{mc^2E^2}{2B^2}
+\end{equation}The result is quite interesting since this means the degeneracy of classical Landau level is spoiled since different $k_y$ yields different energy. The group velocity is given by\begin{equation}
+    v_y=\frac{1}{\hbar}\frac{\partial{E_n}}{\partial{k_y}}=-\frac{e}{\hbar}El_B^2=-\frac{cE}{B}
+\end{equation}This is actually the same with classical physics, where a charged particle doesn't drift in the direction of electric field but in the direction of $\mathbf{E}\times\mathbf{B}$, with a speed of $\frac{cE}{B}$. This also gives a natural interpretation of equation (183). It describes a wavepacket with momentum $k_y$ in $y$-direction is localized at $x=-kl_B^2-\frac{eE}{m\omega_c^2}$ on the $x$-axis (the second term is like the static electric potential energy). The last term can also be thought of as the kinetic energy ($\frac12mv_y^2$) of the particle in $y$-direction. The same thing can also be done in symmetric gauge where we set $\mathbf{A}=\frac12(-By,Bx,0)$. This choice of gauge breaks translation symmetry in both $x$ and $y$-directions. Nevertheless, it does preserve rotational symmetry about the origin, which means the angular momentum is a good quantum number. Detailed solution can be obtained via algebraic approach, but we might as well leave that to the specialized note of quantum Hall effect.\\
+\\
+Something else about the band is the symmetry. The most significant result lattice symmetry gives us is that the Hamiltonian is commutative with all the symmetric operations in the space group. If we use operator $T$ to denote a symmetric operation, we have\begin{equation}
+    T(\{\alpha|\mathbf{t}\})\varphi(\mathbf{r})=\varphi(\alpha^{-1}\mathbf{r}-\alpha^{-1}\mathbf{t})
+\end{equation}In this way, we can conclude that\begin{equation}
+    T(\{\alpha|\mathbf{t}\})\hat{H}\varphi(\mathbf{r})=[-\frac{\hbar^2}{2m}\nabla_{\alpha^{-1}\mathbf{r}}^2+V(\alpha^{-1}\mathbf{r}-\alpha^{-1}\mathbf{t})]\varphi(\alpha^{-1}\mathbf{r}-\alpha^{-1}\mathbf{t})
+\end{equation}Since the Laplacian and the potential field is invariant here, we have\begin{equation}
+    T(\{\alpha|\mathbf{t}\})\hat{H}\varphi(\mathbf{r})=[-\frac{\hbar^2}{2m}\nabla_{\mathbf{r}}^2+V(\mathbf{r})\varphi(\alpha^{-1}\mathbf{r}-\alpha^{-1}\mathbf{t})]=\hat{H}T(\{\alpha|\mathbf{t}\})\varphi(\mathbf{r})
+\end{equation}Thus, the crucial preposition is proved. Now we can make good advantage of this to discuss the symmetry of bands. The first very one has to do with the time-reversal symmetry (TRS). Need to say, time-reversal doesn't mean the reverse of time, but the reverse of motion. In classic mechanics, the state of a particle at time $t$ is described by the location $\mathbf{r}$ and the momentum $\mathbf{p}$. And the time-reversal state is $\mathbf{r}$ and $-\mathbf{p}$, the same also applies for its angular momentum, which now becomes $\mathbf{r}\times-\mathbf{p}=-\mathbf{J}$. We can use an operator $\hat{T}$ to represent the time-reversal operation. It act on a given state and yields its time-reversed state. Since the time-reversal operation cannot change the probability density of the state, we can conclude that the operator $\hat{T}$ has got to be a unitary or an anti-unitary operator. We define the motion of a particle is time-reversal invariant if\begin{equation}
+    (1-\frac{i\hat{H}}{\hbar}dt)\hat{T}\ket\psi=\hat{T}(1-\frac{i\hat{H}}{\hbar}(-dt))\ket\psi
+\end{equation}
+In this way, we obtain\begin{equation}
+    -i\hat{H}\hat{T}\ket\psi=\hat{T}i\hat{H}\ket{\psi}
+\end{equation}
+If $\hat{T}$ is a unitary operator, we have\begin{equation}
+    \hat{H}\hat{T}=-\hat{T}\hat{H}
+\end{equation}
+We can learn from this that for any eigenstate $\ket{E}$ (with the eigenvalue $E$) of the Hamiltonian, $\hat{T}\ket{E}$ is also a eigenstate but with the eigenvalue $-E$. Apparently, this will set no lower bound to the energy, which is completely unacceptable. So $\hat{T}$ is an anti-unitary operator and we thereby have\begin{equation}
+    \hat{H}\hat{T}=\hat{T}\hat{H}
+\end{equation}
+Now we can use the equation (191) to discuss the band symmetry. For a band (spin is also considered) with the time-reversal symmetry, we have\begin{equation}
+    \hat{T}\hat{H}\ket{\mathbf{k},\uparrow}=E_n(\mathbf{k},\uparrow)\hat{T}\ket{\mathbf{k},\uparrow}=E_n(\mathbf{k},\uparrow)\ket{-\mathbf{k},\downarrow}
+\end{equation}In the other hand\begin{equation}
+    \hat{H}\hat{T}\ket{\mathbf{k},\uparrow}=\hat{H}\ket{-\mathbf{k},\downarrow}=E_n(-\mathbf{k},\downarrow)\ket{-\mathbf{k},\downarrow}
+\end{equation}
+Since $\hat{T}$ and $\hat{H}$ are commutative, we can conclude that $\ket{\mathbf{k},\uparrow}$ and $\ket{-\mathbf{k},\downarrow}$ are two degenerate eigenstates of the Hamiltonian. In another word, we unraveled the band symmetry $E_n(\mathbf{k},\uparrow)=E_n(-\mathbf{k},\downarrow)$. Moreover, if the band also exhibit the spatial inversion symmetry, namely $E_n(\mathbf{k},\uparrow)=E_n(-\mathbf{k},\uparrow)$, then we have the Kramers doublet\begin{equation}
+    E_n(\mathbf{k},\uparrow)=E_n(\mathbf{k},\downarrow)
+\end{equation}
+Another important relation is $E_n(\mathbf{k}+\mathbf{G})=E_n(\mathbf{k})$, where $\mathbf{G}$ is a reciprocal lattice. To fully explain this, we might as well recall how the reduced wave vector is defined. In the proof of the Bloch theorem, we restrained the wave vector within the first Brillouin zone to ensure a one-to-one correspondence. But now let's throw this limitation away, which means the same energy eigenvalue is now degenerate with for different wave vectors (adding or subtracting a reciprocal lattice vector). So that is to say, in the same band of different primitive cell of momentum space, identical reduced wave vectors yield same energy\begin{equation}
+    \psi_{n,\mathbf{k}}(\mathbf{r})=\psi_{n,\mathbf{k}+\mathbf{G}_n}(\mathbf{r})
+\end{equation}
+The last one about the band symmetry is $E_n(\alpha\mathbf{k})=E_n(\mathbf{k})$, where $\alpha$ here is a orthogonal transformation in three dimensional space. We have\begin{equation}
+    T(\{\alpha|0\})\hat{H}\varphi_{n,\mathbf{k}}(\mathbf{r})= T(\{\alpha|0\})E_n(\mathbf{k})\varphi_{n,\mathbf{k}}(\mathbf{r})=E_n(\mathbf{k})\varphi_{n,\mathbf{k}}(\alpha^{-1}\mathbf{r})
+\end{equation}Since $\alpha$ is an orthogonal transformation, we have\begin{equation}
+    T(\{\alpha|0\})\hat{H}\varphi_{n,\mathbf{k}}(\mathbf{r})=E_n(\mathbf{k})\varphi'_{n,\alpha\mathbf{k}}(\mathbf{r})
+\end{equation}On the other hand, we have\begin{equation}
+    \hat{H}T(\{\alpha|0\})\varphi_{n,\mathbf{k}}(\mathbf{r})=\hat{H}\varphi'_{n,\alpha\mathbf{k}}(\mathbf{r})=E_n(\alpha\mathbf{k})\varphi'_{n,\alpha\mathbf{k}}(\mathbf{r})
+\end{equation}We can finally conclude that $E_n(\alpha\mathbf{k})=E_n(\mathbf{k})$.
+\section{Density Functional Theory}
+The density functional theory and the related ab initio method are probably the most important and precise way to calculate band structures. We'll see that the calculation of the band through the density functional theory is self-consistent. We begin with the Hamiltonian for a single electron interacting with other electrons and ions in a lattice. By the way, to follow the Pauli exclusive principle, the total wavefunction of these $N$ electrons can be taken as the Slater determinant of different single-electron wavefunction that equivalently carries a $-e$ charge, which is exactly what we've done in the identical particle chapter in the primary quantum mechanics. Here we use $\varphi_i(\mathbf{r})$ to denote the wavefunctions of different electron, and we can get\begin{equation}
+    \hat{H}\varphi_i(\mathbf{r})=[-\frac{\hbar^2}{2m}\nabla^2+V_{ee}(\mathbf{r})+\sum_{\mathbf{R}_0}V_{eL}(\mathbf{r},\mathbf{R}_0)]\varphi_i(\mathbf{r})
+\end{equation}where the electron-electron interaction energy $V_{ee}(\mathbf{r})$ takes the form as\begin{equation}
+    V_{ee}(\mathbf{r})=\sum_{j\neq{i}}\int\frac{e^2|\varphi_j(\mathbf{r}')|^2}{4\pi\varepsilon_0|\mathbf{r}-\mathbf{r}'|}d^3\mathbf{r}'
+\end{equation}But that's still far from the real situation. The missing point is that we neglected some more complicated yet intriguing quantum effect, such as the exchange interaction and the correlation. If we take all of them into consideration, we can have a Hamiltonian like this\begin{equation}
+    \hat{H}\psi(\mathbf{r})=[-\frac{\hbar^2}{2m}\nabla^2+U_e(\mathbf{r})]\psi(\mathbf{r})
+\end{equation}Here comes the most splendid part. In 1965, Kohn and Sham proposed a clever idea. They replaced the interacting system with an auxiliary system of non-interacting electrons, which has the same ground-state charge density $\rho(\mathbf{r})$. In this way, the potential term can be transformed into\begin{equation}
+    U_e(\mathbf{r})=\int\frac{e\rho(\mathbf{r}')}{4\pi\varepsilon_0|\mathbf{r}-\mathbf{r}'|}d^3\mathbf{r}'+V_{ex}(\rho(\mathbf{r}))+V_{corr}(\rho(\mathbf{r}))-\sum_{\mathbf{R}_0}\frac{e^2}{4\pi\varepsilon_0|\mathbf{r}-\mathbf{R}_0|}
+\end{equation}Here we added the exchange and correlation energy to the Hamiltonian. The charge density can be obtained by\begin{equation}
+    \rho(\mathbf{r})=\sum_{i}|\varphi_i(\mathbf{r})|^2
+\end{equation}The very last thing we need to construct a complete loop is the Thomas-Fermi approximation, which builds a bridge between the electron-electron interaction potential and the charge density. Since the total energy of a electron at position $\mathbf{r}$ is $\mu-e\Phi(\mathbf{r})$, where $\mu$ is the chemical potential. Using the fully-degenerated electron gas as an approximation, we obtained the charge density\begin{equation}
+    \rho(\mathbf{r})=\frac{e[2m(\mu-e\Phi(\mathbf{r}))]^{3/2}}{3\pi^2\hbar^3}
+\end{equation}Finally, the loop for self-consistent calculation is built. In practical, we will start with a guess for the charge density $\rho(\mathbf{r})$ and use it to build the electron-electron interaction energy, the exchange energy and the correlation energy. Then we plug all of them into the equation (202), which is called the Kohn-Sham equation. After using the variational method, we can obtain the new ground state wavefunction $\varphi_i(\mathbf{r})$ and corresponding energy (higher levels can also be derived in principle). Then we update the charge density using the equation (204) and the process is thereby repeated. This loop will not be terminated until it converges within a preset precision. This is the magic of the density functional theory and the ab initio (which means the method is totally based on the fundamental principles of the quantum mechanics and solving the Schr\"odinger equation directly) calculation.
 \end{document}
